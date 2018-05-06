@@ -1,0 +1,20 @@
+<table style="width: 100%">
+    <tr>
+        <th>ID</th>
+        <td>Cac chieu trung</td>
+        <td>Mo ta cua nguoi dung</td>
+        <td>Lien he</td>
+    </tr>
+    <%facts.forEach(fact => {%>
+        <tr>
+            <td><%=fact.id%></td>
+            <td>
+                <%fact.events.forEach(event => {%>
+                    <p><%=event.name%></p> 
+                <%})%>
+            </td>
+            <td><%=fact.newevent%></td>
+            <td><%=fact.contact%></td>
+        </tr>
+    <%})%>
+</table>

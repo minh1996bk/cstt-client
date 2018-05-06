@@ -1,0 +1,36 @@
+
+<h1>Them luat moi</h1>  
+<div class="ui-widget">
+    <form action="/rule" method="POST" class="form-group"> 
+        <label for="result-selector">Chon benh</label>
+        <input id="result-text" name="result" class="group-control" oninput="findResult()" placeholder="chon benh">
+        <label for="symptons-seletor">chon trieu chung</label>
+        <input id="event-text" oninput="findEvent('event-text')" placeholder="Chon triệu chứng bệnh">
+        <div id="event-list">
+            <div id="tag">
+                
+            </div>
+        </div>
+        <button type="submit">Tao moi</button>
+    </form>
+</div>
+<table style="width: 100%">
+    <tr>
+        <th>ID</th>
+        <th>Ten benh</th>
+        <th>Cac chieu chung</th>
+ 
+    </tr>
+    <%rules.forEach(rule => {%>
+        <tr>
+            <td><%=rule.id%></td>
+            <td><%=rule.result.name%></td>
+            <td>
+                <%rule.events.forEach(event => {%>
+                    <p><%=event.name%></p> 
+                <%})%>
+            </td>
+     
+        </tr>
+    <%})%>
+</table>
