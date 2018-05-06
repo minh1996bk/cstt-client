@@ -1,14 +1,14 @@
 module.exports = {
     run: async function(req, res) {
 
-        let events = Object.values(req.body);
-        
-        return res.view('pages/result');
+        let events = req.body.events;
+    
+        res.ok();
     },
     create: async function(req, res) {
+        // lay ra ten benh va tap cac su kien 
         let result = req.body.result;
-        delete req.body.result;
-        let events = Object.values(req.body);
+        let events = req.body.events;
         // tao moi 1 benh neu no chua ton tai
         let newOrExistResult = await Result.findOrCreate({name: result}, {name: result});
 

@@ -3,18 +3,26 @@
     <div class="col-md-6">
         <div class="ui-widget">
             
-            <form action="/result" method="POST" class="form-group">
-                <button class="btn">Chuẩn đoán bệnh</button>
-                <button class="btn">Tư vấn gieo trồng</button>
-                <input id="event-text" name="event" oninput="findEvent('event-text')" placeholder="Nhập vào các triệu chứng bệnh" class="form-control" style="width:100%"><button type="submit">Chuan doan</button>
-                
-                <div class="events-tag">
-                    <div id="tag">
-                        
+            <div class="form-group">
+                <div class="row" style="margin-bottom: 20px;">
+                    <div class="col-md-3"></div>
+                    <div class="col-md-3">
+                        <button id="disease-mode-btn" class="btn mybtn">Chuẩn đoán bệnh</button>
                     </div>
+                    <dvi class="col-md-3">
+                        <button id="planting-mode-btn" class="btn mybtn">Tư vấn gieo trồng</button>
+                    </dvi>
+                    <div class="col-md-3"></div>
                 </div>
-                
-            </form>
+                <div><input id="event-text" name="event" oninput="findEvent('event-text')" placeholder="Nhập vào các triệu chứng bệnh" class="form-control" style="width:100%"></div>
+                <div class="events-tag" style="margin-top:10px">
+                    <ul id="tag">
+                        
+                    </ul>
+                </div>
+                <button id="search-result-btn" class="btn mybtn" style="border: 0.5px solid #b7bec9;">Tìm kiếm</button>
+
+            </div>
         </div>
     </div>
     <div class="col-md-3"></div>
@@ -26,3 +34,24 @@
        background-color: cornflowerblue;
    }
 </style>
+<script>
+    document.getElementById('disease-mode-btn').style.backgroundColor = "#f2f4f7";
+    $('#disease-mode-btn').on('click', function() {
+        searchTarget = '/disease';
+        events = [];
+        $('#tag').empty();
+        document.getElementById('disease-mode-btn').style.backgroundColor = "#f2f4f7";
+        document.getElementById('planting-mode-btn').style.backgroundColor = "inherit";
+        document.getElementById('event-text').placeholder = "Nhập vào các triệu chứng bệnh"
+    });
+
+    $('#planting-mode-btn').on('click', function() {
+        searchTarget = '/planting';
+        events = [];
+        $('#tag').empty();
+        document.getElementById('disease-mode-btn').style.backgroundColor = "inherit";
+        document.getElementById('planting-mode-btn').style.backgroundColor = "#f2f4f7";
+        document.getElementById('event-text').placeholder = "Nhập vào các đặc tính lúa";
+    });
+
+</script>

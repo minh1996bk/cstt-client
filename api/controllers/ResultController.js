@@ -1,6 +1,7 @@
 module.exports = {
     socketFindResult: async function(req, res) {
         if (!req.isSocket) return res.badRequest();
+        console.log(req.body.result)
         let results = await Result.find({
             where: {
                 name: {

@@ -28,7 +28,8 @@ module.exports.routes = {
     view: 'pages/home'
   },
 
-  'post /result': 'RuleController.run',
+  'post /disease': 'RuleController.run',
+  'post /planting' : 'RuleController.run',
   'get /expert' : {action: 'expert-page'},
 
   'post /rule' : 'RuleController.create',
@@ -38,75 +39,22 @@ module.exports.routes = {
   'get /findEvent' : 'EventsController.socketFindEvent',
   'get /findResult': 'ResultController.socketFindResult',
   'get /rules' : async function(req, res) {
-      // let rules = await Rule.find({}).populate('results').populate('events');
-      rules = [
-        {
-          id: 1,
-          result: {
-            name: "sau cuon la"
-          },
-          events: [
-            {
-              id: 1,
-              name: 'la bi cuong'
-            },
-            {
-              id: 2,
-              name: 'co sau'
-            }
-          ]
-        }
-      ]
+      let rules = await Rule.find({}).populate('result').populate('events');
+      
       res.view('pages/rules', {
         rules: rules
       });
   },
   'get /events' : async function(req, res) {
-      // let events = await Events.find({});
-      let events = [
-        {
-          id: 1,
-          name: 'la vang',
-          results: [
-            {
-              id: 1,
-              name: 'sau cuon la',
-            },
-            {
-              id: 2,
-              name: 'kho van'
-            }
-          ]
-        }
-      ]
+      let events = await Events.find({});
+ 
       res.view('pages/events', {
         events: events
       })
   },
   'get /results' : async function(req, res) {
-      // let results = await Result.find({});
-      results = [
-        {
-          id: 1,
-          name: 'sau cuon la',
-          events: [
-            {
-              id: 1,
-              name: 'la bi cuong'
-            },
-            {
-              id: 2,
-              name: 'co sau'
-            }
-          ],
-          solution: 'phun thuoc',
-        },
-        {
-          id: 2,
-          name: 'kho la',
-          solution: 'chiu'
-        }
-      ]
+      let results = await Result.find({});
+      
       res.view('pages/results', {
         results: results
       });
@@ -133,7 +81,8 @@ module.exports.routes = {
       res.view('pages/facts', {
         facts: facts
       });
-  }
+  },
+
   /***************************************************************************
   *                                                                          *
   * More custom routes here...                                               *

@@ -1,36 +1,46 @@
-
-<h1>Them luat moi</h1>  
-<div class="ui-widget">
-    <form action="/rule" method="POST" class="form-group"> 
-        <label for="result-selector">Chon benh</label>
-        <input id="result-text" name="result" class="group-control" oninput="findResult()" placeholder="chon benh">
-        <label for="symptons-seletor">chon trieu chung</label>
-        <input id="event-text" oninput="findEvent('event-text')" placeholder="Chon triệu chứng bệnh">
-        <div id="event-list">
-            <div id="tag">
-                
+<div class="row">
+    <div class="col-md-2">
+        <div style="position: fixed">
+            <button id="add-new-rule" class="btn mybtn" style="width: 100%">
+                    Thêm luật mới
+            </button>
+        </div>
+    </div>
+    <div class="col-md-10">
+        <div id="new-rule-form" class="ui-widget" hidden>
+            <div class="form-group"> 
+                <label for="result-selector">Chọn bệnh: </label>
+                <input id="result-text" name="result" class="form-control" oninput="findResult()" placeholder="Chọn bệnh">
+                <label for="symptons-seletor">Chọn các triệu chứng: </label>
+                <input id="event-text" class="form-control" oninput="findEvent('event-text')" placeholder="Chon triệu chứng bệnh">
+                <div id="event-list">
+                    <div id="tag" style="margin: 10px;">
+                        
+                    </div>
+                </div>
+                <button id="create-rule-btn" class="btn mybtn" style="border: 0.5px solid #b7bec9">Tạo mới</button>
             </div>
         </div>
-        <button type="submit">Tao moi</button>
-    </form>
+        <table style="width: 100%">
+            <tr>
+                <th>ID</th>
+                <th>Tên bệnh</th>
+                <th>Các triệu chứng</th>
+        
+            </tr>
+            <%rules.forEach(rule => {%>
+                <tr>
+                    <td><%=rule.id%></td>
+                    <td><%=rule.result.name%></td>
+                    <td>
+                        <%rule.events.forEach(event => {%>
+                            <p><%=event.name%></p> 
+                        <%})%>
+                    </td>
+            
+                </tr>
+            <%})%>
+        </table>
+
+    </div>
 </div>
-<table style="width: 100%">
-    <tr>
-        <th>ID</th>
-        <th>Ten benh</th>
-        <th>Cac chieu chung</th>
- 
-    </tr>
-    <%rules.forEach(rule => {%>
-        <tr>
-            <td><%=rule.id%></td>
-            <td><%=rule.result.name%></td>
-            <td>
-                <%rule.events.forEach(event => {%>
-                    <p><%=event.name%></p> 
-                <%})%>
-            </td>
-     
-        </tr>
-    <%})%>
-</table>
