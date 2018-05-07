@@ -33,7 +33,20 @@ module.exports.routes = {
   'get /expert' : {action: 'expert-page'},
 
   'post /rule' : 'RuleController.create',
-
+  'get /result/:id' : async function(req, res) {
+    let result = await Result.findOne({id: req.params.id});
+    res.json({
+      result: result
+    })
+  },
+  'post /updateResult': async function(req, res) {
+    await Result.update({id: req.body.id})
+    .set({
+      name: req.body.name,
+      solution: req.body.solution,
+    })
+    res.ok();
+  },
   //socket
 
   'get /findEvent' : 'EventsController.socketFindEvent',

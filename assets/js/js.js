@@ -96,12 +96,36 @@ $('#search-result-btn').on('click', function() {
         events: events
     }, function(data, status) {
         document.getElementById('search-container').style.top = "50px";
+        let htm = `
+                <h1>Tên bệnh : Sâu cuốn lá</h1>
+                <hr>
+                <h2>Các triệu chứng: </h2>
+                <ul>
+                    <li>Lá vàng</li>
+                    <li>Có sâu</li>
+                </ul>
+                <hr>
+                <h2>Một só hình ảnh</h2>
+                <div>
+                    <button id="prevImg"><<</button>
+                    <img id="img-view" src="http://9mobi.vn/cf/images/2015/03/nkk/hinh-dep-1.jpg" style="width: 100%; height: 400px;">
+                    <button id="nextImg">>></button>
+                </div>
+                <hr>
+                <h2>Biện pháp chữa trị</h2>
+                <ul>
+                    <li>Phun thuốc trừ sâu</li>
+                </ul>
+        `;
+        $('#search-result').empty();
+        $('#search-result').append(htm);
+
     })
     events = [];
 });
 
 $('#add-new-rule').on('click', function() {
-    console.log("ok");
+
     document.getElementById('new-rule-form').hidden = false;
 });
 
@@ -113,3 +137,58 @@ $('#nextImg').on('click', function() {
     currentImg = currentImg + 1 < images.length ? currentImg + 1 : 0;
     document.getElementById('img-view').src = images[currentImg];
 })
+
+async function updateResult(id) {
+
+    let rep = await $.get(`/result/${id}`);
+    let result = rep.result;
+    let htm =  `
+    <div class="modal-dialog">
+        <div class="modal-content">
+  
+            <!-- Modal Header -->
+            <div class="modal-header">
+            <h4 class="modal-title">Biện pháp chữa trị</h4>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+    
+            <!-- Modal body -->
+            <div class="modal-body">
+                <h4>Tên bệnh</h4>
+                <input id="name-text" value="${result.name}">
+                <hr>
+                <h4>Biện pháp chữa trị</h4>
+                <textarea id="solution-text">${result.solution}</textarea>
+            </div>
+    
+            <!-- Modal footer -->
+            <div class="modal-footer">
+            <button type="button" class="btn btn-danger" onclick="doUpdateResult(${result.id})">Cập nhật</button>
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Trở về</button>
+            </div>
+  
+        </div>
+    </div>
+    `;
+    let modal = $('#myModal');
+    modal.empty();
+    modal.append(htm);
+    modal.modal('show');
+}
+
+async function doUpdateResult(id) {
+    let newName = $('#name-text').val();
+    let newSolution = $('#solution-text').val();
+
+    let updatedResult = {
+        id: id,
+        name: newName,
+        solution: newSolution
+    }
+    $('#myModal').empty();
+    $('#myModal').modal('hide');
+    await $.post('/updateResult', updatedResult);
+    window.alert('Cập nhật thành công');
+
+
+}

@@ -4,6 +4,7 @@
             <button id="add-new-rule" class="btn mybtn" style="width: 100%">
                     Thêm luật mới
             </button>
+
         </div>
     </div>
     <div class="col-md-10">
@@ -26,6 +27,7 @@
                 <th>ID</th>
                 <th>Tên bệnh</th>
                 <th>Các triệu chứng</th>
+                <th>Biện pháp chữa trị</th>
         
             </tr>
             <%rules.forEach(rule => {%>
@@ -37,10 +39,21 @@
                             <p><%=event.name%></p> 
                         <%})%>
                     </td>
-            
+                    <td>
+                      
+                        <p><%=rule.result.solution%></p>
+                        
+                        
+                    </td>
+                    <td>
+                        <button onclick="updateResult('<%=rule.result.id%>')">Chỉnh sửa</button>
+                    </td>
                 </tr>
             <%})%>
         </table>
 
     </div>
+</div>
+<div class="modal" id="myModal">
+    
 </div>
