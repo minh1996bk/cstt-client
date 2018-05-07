@@ -6,7 +6,37 @@
         </div>
         <div class="col-md-3"></div>
     </div>
-    <%-include('search')%>
+
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            <div class="ui-widget">
+                
+                <div class="form-group">
+                    <div class="row" style="margin-bottom: 20px;">
+                        <div class="col-md-3"></div>
+                        <div class="col-md-3">
+                            <button id="disease-mode-btn" class="btn mybtn">Chuẩn đoán bệnh</button>
+                        </div>
+                        <dvi class="col-md-3">
+                            <button id="planting-mode-btn" class="btn mybtn">Tư vấn gieo trồng</button>
+                        </dvi>
+                        <div class="col-md-3"></div>
+                    </div>
+                    <div><input id="event-text" name="event" oninput="findEvent()" placeholder="Nhập vào các triệu chứng bệnh" class="form-control" style="width:100%"></div>
+                    <div class="events-tag" style="margin-top:10px">
+                        <ul id="tag">
+                            
+                        </ul>
+                    </div>
+                    <button id="search-result-btn" class="btn mybtn" style="border: 0.5px solid #b7bec9;">Tìm kiếm</button>
+    
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3"></div>
+    </div>
+
     <div class="row" style="position:relative;">
         <div class="col-md-3"></div>
         <div class="col-md-6">
@@ -18,3 +48,14 @@
     </div>
         
 </div>
+
+<style>
+    
+    .ui-menu-item:hover {
+        background-color: cornflowerblue;
+    }
+ </style>
+ <script>
+ document.getElementById('disease-mode-btn').style.backgroundColor = "#f2f4f7";
+ 
+ </script>

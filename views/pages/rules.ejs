@@ -1,20 +1,20 @@
-<div class="row">
-    <div class="col-md-2">
-        <div style="position: fixed; width: 15%;" >
-            <div style="position: relative; margin-top: 200px;">
-                <button id="add-new-rule" class="btn mybtn" style="width: 100%">Thêm luật mới</button>
-                <button class="btn mybtn" style="width: 100%">Quản lý luật bệnh</button>
-                <button class="btn mybtn" style="width: 100%">Quản lý luật chọn giống</button>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-10">
+<div>
+    
+    <%if (isBenh) {%>
+        <p><a href="/rules/giong">Quản lý luật chọng giống</a></p>
+    <%} else {%>
+        <p><a href="/rules/benh">Quản lý luật bệnh</a></p>
+    <%}%>
+</div>
+<div class="row" style="width: 100%; margin: 20px;">
+    <div style="width: 100%">
+        <button id="add-new-rule" class="btn mybtn" style="width: 100%">Thêm luật mới</button>
         <div id="new-rule-form" class="ui-widget" hidden>
             <div class="form-group"> 
                 <label for="result-selector">Chọn bệnh: </label>
-                <input id="result-text" name="result" class="form-control" oninput="findResult()" placeholder="Chọn bệnh">
+                <input id="result-text" name="result" class="form-control" oninput="findResult('<%=isBenh%>')" placeholder="Chọn bệnh">
                 <label for="symptons-seletor">Chọn các triệu chứng: </label>
-                <input id="event-text" class="form-control" oninput="findEvent('event-text')" placeholder="Chon triệu chứng bệnh">
+                <input id="event-text" class="form-control" oninput="findEvent('<%isBenh%>')" placeholder="Chon triệu chứng bệnh">
                 <div id="event-list">
                     <div id="tag" style="margin: 10px;">
                         
@@ -25,11 +25,19 @@
         </div>
         <table style="width: 100%">
             <tr>
-                <th>ID</th>
-                <th>Tên bệnh</th>
-                <th>Các triệu chứng</th>
-                <th>Biện pháp chữa trị</th>
-        
+                <%if (isBenh) {%>
+                    <th>ID</th>
+                    <th>Tên bệnh</th>
+                    <th>Các triệu chứng</th>
+                    <th>Biện pháp chữa trị</th>
+                <%} else {%>
+                    <th>ID</th>
+                    <th>Tên giống lúa</th>
+                    <th>Các đặc điểm</th>
+                    <th>Thông tin chi tiết</th>    
+                <%}%>      
+                <th>Tùy chọn</th>
+
             </tr>
             <%rules.forEach(rule => {%>
                 <tr>

@@ -8,5 +8,4 @@ function log() {
 function wrapper(foo) {
     foo();
 }
-
-wrapper(log);
+console.log(undefined == false);

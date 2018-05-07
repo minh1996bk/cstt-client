@@ -9,14 +9,19 @@ var currentImg = 0;
 var key;
 var type = 'benh';
 
-function findEvent(input) {
+function findEvent(isBenh) {
     let time = new Date().getTime();
     key = time;
-    
+    console.log(isBenh);
+    if (isBenh == 'true') {
+        type = 'benh';
+    } else if (isBenh == 'false'){
+        type = 'giong'
+    }
     setTimeout(function() {
         if (time === key) {
             
-            let event = $(`#${input}`).val();
+            let event = $(`#event-text`).val();
     
             io.socket.get('/findEvent', {event: event, type: type}, (res, jw) => {
                 //just ignore
@@ -26,9 +31,16 @@ function findEvent(input) {
     
 }
 
-function findResult() {
+function findResult(isBenh) {
     let time = new Date().getTime();
     key = time;
+
+    console.log(isBenh);
+    if (isBenh == 'true') {
+        type = 'benh';
+    } else if (isBenh == 'false'){
+        type = 'giong'
+    }
     setTimeout(function() {
         if (time === key) {
             let result = $(`#result-text`).val();
@@ -77,6 +89,7 @@ $('#create-rule-btn').on('click', function() {
     let result = $('#result-text').val();
     if (!result || !events) return;
     let newRule = {
+        type: type,
         result: result,
         events: events
     }

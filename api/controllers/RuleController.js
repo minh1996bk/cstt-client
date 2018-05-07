@@ -46,7 +46,8 @@ module.exports = {
         }).populate('result').populate('events');
         
         res.view('pages/rules', {
-          rules: rules
+          rules: rules,
+          isBenh: type == 'benh'
         });
     },
     update: async function(req, res) {

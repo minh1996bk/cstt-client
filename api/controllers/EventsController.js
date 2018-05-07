@@ -5,7 +5,8 @@ module.exports = {
             where: {
                 name: {
                     contains: req.body.event
-                }
+                },
+                type: req.body.type
             }
         })
         sails.sockets.broadcast(sails.sockets.getId(req), 'findEvent', events);
