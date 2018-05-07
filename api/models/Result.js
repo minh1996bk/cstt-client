@@ -4,6 +4,11 @@ module.exports = {
             type: 'string',
             required: true
         },
+        type: {
+            type: 'string',
+            isIn: ['benh', 'giong']
+        },
+
         events: {
             collection: 'events',
             via: 'results'

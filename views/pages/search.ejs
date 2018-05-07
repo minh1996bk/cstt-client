@@ -35,23 +35,6 @@
    }
 </style>
 <script>
-    document.getElementById('disease-mode-btn').style.backgroundColor = "#f2f4f7";
-    $('#disease-mode-btn').on('click', function() {
-        searchTarget = '/disease';
-        events = [];
-        $('#tag').empty();
-        document.getElementById('disease-mode-btn').style.backgroundColor = "#f2f4f7";
-        document.getElementById('planting-mode-btn').style.backgroundColor = "inherit";
-        document.getElementById('event-text').placeholder = "Nhập vào các triệu chứng bệnh"
-    });
-
-    $('#planting-mode-btn').on('click', function() {
-        searchTarget = '/planting';
-        events = [];
-        $('#tag').empty();
-        document.getElementById('disease-mode-btn').style.backgroundColor = "inherit";
-        document.getElementById('planting-mode-btn').style.backgroundColor = "#f2f4f7";
-        document.getElementById('event-text').placeholder = "Nhập vào các đặc tính lúa";
-    });
+document.getElementById('disease-mode-btn').style.backgroundColor = "#f2f4f7";
 
 </script>

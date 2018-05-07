@@ -1,5 +1,5 @@
 
-var searchTarget = "/disease";
+
 var events = [];
 var images = [
     "http://9mobi.vn/cf/images/2015/03/nkk/hinh-dep-1.jpg",
@@ -7,6 +7,7 @@ var images = [
 ];
 var currentImg = 0;
 var key;
+var type = 'benh';
 
 function findEvent(input) {
     let time = new Date().getTime();
@@ -17,7 +18,7 @@ function findEvent(input) {
             
             let event = $(`#${input}`).val();
     
-            io.socket.get('/findEvent', {event: event}, (res, jw) => {
+            io.socket.get('/findEvent', {event: event, type: type}, (res, jw) => {
                 //just ignore
             }) 
         }
@@ -31,7 +32,7 @@ function findResult() {
     setTimeout(function() {
         if (time === key) {
             let result = $(`#result-text`).val();
-            io.socket.get('/findResult', {result: result}, (res, jw) => {
+            io.socket.get('/findResult', {result: result, type: type}, (res, jw) => {
                 //just ignore
             })
         }
@@ -92,8 +93,9 @@ $('#search-result-btn').on('click', function() {
     if (!events) return;
     
     $('#tag').empty();
-    $.post(searchTarget, {
-        events: events
+    $.post('/search-result', {
+        events: events,
+        type: type,
     }, function(data, status) {
         document.getElementById('search-container').style.top = "50px";
         let htm = `
@@ -189,6 +191,23 @@ async function doUpdateResult(id) {
     $('#myModal').modal('hide');
     await $.post('/updateResult', updatedResult);
     window.alert('Cập nhật thành công');
-
-
 }
+
+
+    $('#disease-mode-btn').on('click', function() {
+        type = 'benh';
+        events = [];
+        $('#tag').empty();
+        document.getElementById('disease-mode-btn').style.backgroundColor = "#f2f4f7";
+        document.getElementById('planting-mode-btn').style.backgroundColor = "inherit";
+        document.getElementById('event-text').placeholder = "Nhập vào các triệu chứng bệnh"
+    });
+
+    $('#planting-mode-btn').on('click', function() {
+        type = 'giong';
+        events = [];
+        $('#tag').empty();
+        document.getElementById('disease-mode-btn').style.backgroundColor = "inherit";
+        document.getElementById('planting-mode-btn').style.backgroundColor = "#f2f4f7";
+        document.getElementById('event-text').placeholder = "Nhập vào các đặc tính lúa";
+    });

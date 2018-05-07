@@ -28,73 +28,19 @@ module.exports.routes = {
     view: 'pages/home'
   },
 
-  'post /disease': 'RuleController.run',
-  'post /planting' : 'RuleController.run',
+  'post /search-result': 'RuleController.run',
+
   'get /expert' : {action: 'expert-page'},
 
   'post /rule' : 'RuleController.create',
-  'get /result/:id' : async function(req, res) {
-    let result = await Result.findOne({id: req.params.id});
-    res.json({
-      result: result
-    })
-  },
-  'post /updateResult': async function(req, res) {
-    await Result.update({id: req.body.id})
-    .set({
-      name: req.body.name,
-      solution: req.body.solution,
-    })
-    res.ok();
-  },
+  'get /result/:id' : 'ResultController.get',
+  'post /updateResult': 'ResultController.update',
   //socket
 
   'get /findEvent' : 'EventsController.socketFindEvent',
   'get /findResult': 'ResultController.socketFindResult',
-  'get /rules' : async function(req, res) {
-      let rules = await Rule.find({}).populate('result').populate('events');
-      
-      res.view('pages/rules', {
-        rules: rules
-      });
-  },
-  'get /events' : async function(req, res) {
-      let events = await Events.find({});
+  'get /rules/:type' : 'RuleController.gets',
  
-      res.view('pages/events', {
-        events: events
-      })
-  },
-  'get /results' : async function(req, res) {
-      let results = await Result.find({});
-      
-      res.view('pages/results', {
-        results: results
-      });
-  },
-  'get /facts' : async function(req, res) {
-      // let facts = await Fact.find({}).populate('events');
-      let facts = [
-        {
-          id: 1,
-          events: [
-            {
-              id: 1,
-              name: 'la bi cuong'
-            },
-            {
-              id: 2,
-              name: 'co sau'
-            }
-          ],
-          newevent: 'la no bi gi ay',
-          contact: '09039023392'
-        }
-      ]
-      res.view('pages/facts', {
-        facts: facts
-      });
-  },
 
   /***************************************************************************
   *                                                                          *

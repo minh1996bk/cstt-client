@@ -16,7 +16,19 @@ module.exports.policies = {
   * (`true` allows public access)                                            *
   *                                                                          *
   ***************************************************************************/
-
-  // '*': true,
+  RuleController: {
+    run: 'Rule/for-run',
+    create: 'Rule/for-create',
+    gets: 'Rule/for-gets',
+  },
+  EventsController: {
+    socketFindEvent: 'Events/for-socket-find-event',
+    
+  },
+  ResultController: {
+    get:'Result/for-get',
+    update: 'Result/for-update',
+    socketFindResult: 'Result/for-socket-find-result',
+  }
 
 };

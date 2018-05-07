@@ -9,15 +9,18 @@ module.exports = {
         // lay ra ten benh va tap cac su kien 
         let result = req.body.result;
         let events = req.body.events;
+        let type = req.body.type;
+
+        
         // tao moi 1 benh neu no chua ton tai
-        let newOrExistResult = await Result.findOrCreate({name: result}, {name: result});
+        let newOrExistResult = await Result.findOrCreate({name: result, type: type}, {name: result, type: type});
 
         // mang chua id cua cac event
         let eventIds = [];
         for (let i = 0; i < events.length; i ++) {
             //tao moi 1 event neu no chua ton tai
             
-            let newOrExistEvent = await Events.findOrCreate({name: events[i]}, {name: events[i]});
+            let newOrExistEvent = await Events.findOrCreate({name: events[i], type: type}, {name: events[i], type: type});
             eventIds.push(newOrExistEvent.id);
         }
         // lay ra id cua benh
@@ -27,13 +30,24 @@ module.exports = {
         .members(eventIds);
         // tao luat moi
         let newRule = await Rule.create({
-            result: resultId
+            result: resultId,
+            type: type
         }).fetch();
         // tao lien ket giu luat vs events
         await Rule.addToCollection(newRule.id, 'events')
         .members(eventIds);
         
         res.ok();
+    },
+    gets: async function(req, res) {
+        let type = req.params.type;
+        let rules = await Rule.find({
+            type: type
+        }).populate('result').populate('events');
+        
+        res.view('pages/rules', {
+          rules: rules
+        });
     },
     update: async function(req, res) {
 

@@ -1,6 +1,6 @@
 module.exports = {
     socketFindEvent: async function(req, res) {
-        if (!req.isSocket) return res.badRequest();
+        
         let events = await Events.find({
             where: {
                 name: {
