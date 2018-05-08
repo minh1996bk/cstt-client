@@ -16,9 +16,6 @@ module.exports = {
             collection: 'result',
             via: 'events'
         },
-        facts: {
-            collection: 'fact',
-            via: 'events'
-        }
+        
     }
 }

@@ -105,7 +105,9 @@
         });
 
         let imgHtm = "";
-        if (images) {
+      
+        if (images[0]) {
+
             imgHtm = `
                 <h2>Một số hình ảnh</h2>
                 <div>
@@ -116,6 +118,7 @@
                 <hr>
             `;
         }
+ 
 
         let solutionsHtm = "";
         result.solution.split('+').forEach(line => {
@@ -131,13 +134,8 @@
                     ${eventsHtm}
                 </ul>
                 <hr>
-                <h2>Một số hình ảnh</h2>
-                <div>
-                    <button id="prevImg" onclick="nextImg()"><<</button>
-                    <button id="nextImg" onclick="prevImg()">>></button>
-                    <img id="img-view" src="${images[0]}" style="width: 100%; height: 400px;">
-                </div>
-                <hr>
+                ${imgHtm}
+      
                 <h2>Thông tin chi tiết</h2>
                 <ul>
                     ${solutionsHtm}
@@ -171,7 +169,7 @@
                 events: events,
               
             }, function(data, status) {
-                
+     
                 if (data.result) {
                     images = data.result.urls;
                     

@@ -40,7 +40,10 @@ module.exports.routes = {
 
   'get /findEvent' : 'EventsController.socketFindEvent',
   'get /findResult': 'ResultController.socketFindResult',
-
+  //expert
+  'get /expert' : {
+    view: 'pages/expert',
+  },
 
   //benh lua
   'get /quanlybenh' : 'RuleController.quanlybenh',
@@ -56,6 +59,8 @@ module.exports.routes = {
   },
   'post /taoluatgiong' : 'RuleController.taoluatgiong',
   'post /chongionglua': 'RuleController.chonGiongLua',
+  // su kien moi
+  'get /quanlysukienmoi' : 'FactController.quanlysukienmoi',
   /***************************************************************************
   *                                                                          *
   * More custom routes here...                                               *

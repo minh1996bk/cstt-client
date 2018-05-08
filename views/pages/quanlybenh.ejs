@@ -35,7 +35,7 @@
                         <%=rule.rate%>
                     </td>
                     <td>
-                        <button onclick="updateBenh('<%=rule.result.id%>')">Chỉnh sửa</button>
+                        <button onclick="updateBenh('<%=rule.result.id%>')">Cập nhật bệnh</button>
                     </td>
                 </tr>
             <%})%>
@@ -48,36 +48,36 @@
 </div>
 
 <script>
-    async function updateBenh(id, isBenh) {
+    async function updateBenh(id) {
 
         let rep = await $.get(`/result/${id}`);
-
+        let result = rep.result;
         let htm =  `
         <form action = "/updateBenh" method="POST" enctype="multipart/form-data">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Biện pháp chữa trị</h4>
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                </div>
-                <div class="modal-body form-group">
-                        <input name="id" value="${id}" hidden>
-                        <h4>Tên bệnh</h4>
-                        <input id="name-text" name="result" class="form-control" value="${result.name}">
-                        <hr>
-                        <h4>Biện pháp chữa trị</h4>
-                        <textarea id="solution-text" name="solution" class="form-control" style="height:400px;">${result.solution}</textarea>
-                        <h4>Thêm hình ảnh</h4>
-                        <input type="file" name="img" class="form-control">
-                    
-                </div>
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Cập nhật bệnh</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body form-group">
+                            <input name="id" value="${id}" hidden>
+                            <h4>Tên bệnh</h4>
+                            <input id="name-text" name="result" class="form-control" value="${result.name}">
+                            <hr>
+                            <h4>Biện pháp chữa trị</h4>
+                            <textarea id="solution-text" name="solution" class="form-control" style="height:400px;">${result.solution}</textarea>
+                            <h4>Thêm hình ảnh</h4>
+                            <input type="file" name="img" class="form-control">
+                  
+                    </div>
 
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-default">Cập nhật</button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Trở về</button>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-default">Cập nhật</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Trở về</button>
+                    </div>
                 </div>
             </div>
-        </div>
         </form>
         `;
         let modal = $('#myModal');

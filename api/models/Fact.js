@@ -1,9 +1,6 @@
 module.exports = {
     attributes: {
-        events: {
-            collection: 'events',
-            via: 'facts'
-        },
+        type: 'string',
         newevent: {
             type: 'string',
             required: true
