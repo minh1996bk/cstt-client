@@ -8,6 +8,10 @@ module.exports = {
             collection: 'events',
             via: 'rules'
         },
+        rate: {
+            type: 'number',
+            defaultsTo: 100
+        },
         result: {
             model: 'result'
         }

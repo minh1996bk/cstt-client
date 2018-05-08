@@ -14,7 +14,7 @@
                     <div class="row" style="margin-bottom: 20px;">
                         <div class="col-md-3"></div>
                         <div class="col-md-3">
-                            <button id="disease-mode-btn" class="btn mybtn">Chuẩn đoán bệnh</button>
+                            <button id="disease-mode-btn" class="btn mybtn" style="background-color: #f2f4f7;">Chuẩn đoán bệnh</button>
                         </div>
                         <dvi class="col-md-3">
                             <button id="planting-mode-btn" class="btn mybtn">Tư vấn gieo trồng</button>
@@ -22,7 +22,8 @@
                         <div class="col-md-3"></div>
                     </div>
                     <div><input id="event-text" name="event" oninput="findEvent()" placeholder="Nhập vào các triệu chứng bệnh" class="form-control" style="width:100%"></div>
-                    <div class="events-tag" style="margin-top:10px">
+                    <div id="events-tag" class="events-tag" style="margin-top:10px" hidden>
+                        <h5 id="event-list-header">Tập các triệu chứng</h5>
                         <ul id="tag">
                             
                         </ul>
@@ -39,20 +40,147 @@
         <div class="col-md-3"></div>
         <div class="col-md-6">
             <div id="search-result">
+
             </div>
         </div>
         <div class="col-md-3"></div>
     </div>
-        
 </div>
-
-<style>
-    
-    .ui-menu-item:hover {
-        background-color: cornflowerblue;
+<script>
+    var resultIds = [];
+    var images;
+    function resetAll() {
+        events = [];
+        images;
+        currentImg = 0;
+        key;
+        type = 'benh';
+        document.getElementById('search-container').style.top = '270px';
+        $('#tag').empty();
+        $('#event-list-header').val('Tập các triệu chứng');
+        $('#events-tag').hide();
+        $('#search-result').empty();
     }
- </style>
- <script>
- document.getElementById('disease-mode-btn').style.backgroundColor = "#f2f4f7";
- 
- </script>
+
+    function renderBenh(result, rate) {
+  
+        let eventsHtm = "";
+        result.events.forEach(event => {
+            eventsHtm += `<li>${event.name}</li>`;
+        })
+        
+        let imgHtm = "";
+        if (images) {
+            imgHtm = `
+                <h2>Một số hình ảnh</h2>
+                <div>
+                    <button id="prevImg" onclick="nextImg()"><<</button>
+                    <button id="nextImg" onclick="prevImg()">>></button>
+                    <img id="img-view" src="${images[0]}" style="width: 100%; height: 400px;">
+                </div>
+                <hr>
+            `
+        }
+
+        let solutionsHtm = "";
+        result.solution.split('+').forEach(line => {
+            solutionsHtm += `<li>${line}</li>`;
+        })
+        let htm = `
+                <hr>
+                <h1>Tên bệnh : ${result.name}</h1>
+                <h1>Tỉ lệ : ${rate} %</h1>
+                <hr>
+                <h2>Các triệu chứng: </h2>
+                <ul>
+                    ${eventsHtm}
+                </ul>
+                <hr>
+                ${imgHtm}
+                <h2>Biện pháp chữa trị</h2>
+                <ul>
+                    ${solutionsHtm}
+                </ul>
+        `;
+        $('#search-result').empty();
+        $('#search-result').append(htm);
+    }
+
+    function renderGiong(result) {
+        let eventsHtm = "";
+        result.events.forEach(event => {
+            eventsHtm += `<li>${event.name}</li>`;
+        });
+
+        let imgHtm = "";
+        if (images) {
+            imgHtm = `
+                <h2>Một số hình ảnh</h2>
+                <div>
+                    <button id="prevImg" onclick="nextImg()"><<</button>
+                    <button id="nextImg" onclick="prevImg()">>></button>
+                    <img id="img-view" src="${images[0]}" style="width: 100%; height: 400px;">
+                </div>
+                <hr>
+            `;
+        }
+
+        let solutionsHtm = "";
+        result.solution.split('+').forEach(line => {
+            solutionsHtm += `<li>${line}</li>`;
+        });
+
+        let htm = `
+                <hr>
+                <h1>Tên giống lúa : ${name}</h1>
+                <hr>
+                <h2>Các đặc tính: </h2>
+                <ul>
+                    ${eventsHtm}
+                </ul>
+                <hr>
+                <h2>Một số hình ảnh</h2>
+                <div>
+                    <button id="prevImg" onclick="nextImg()"><<</button>
+                    <button id="nextImg" onclick="prevImg()">>></button>
+                    <img id="img-view" src="${images[0]}" style="width: 100%; height: 400px;">
+                </div>
+                <hr>
+                <h2>Thông tin chi tiết</h2>
+                <ul>
+                    ${solutionsHtm}
+                </ul>
+        `;
+        $('#search-result').empty();
+        $('#search-result').append(htm);
+    }
+    $('#search-result-btn').on('click', function() {
+        if (!events) return false;
+        
+        $('#tag').empty();
+        
+        if (type == 'benh') {
+            $.post('/chuandoanbenh', {
+                events: events,
+              
+            }, function(data, status) {
+                
+                if (data.result) {
+                    images = data.result.urls;
+                    
+                    renderBenh(data.result, data.rate);
+                } else {
+                    showMessage();
+                }
+                
+            });
+        }
+        
+        events = [];
+    });
+
+    function showMessage() {
+        $('#search-result').empty();
+        $('#search-result').append("<hr><h1>Không có kết quả phù hợp</h1>")
+    }
+</script>

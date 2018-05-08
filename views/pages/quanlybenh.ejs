@@ -1,0 +1,101 @@
+<div style="padding: 20px;">
+    <p><a href="/quanlygiong">Quản lý luật giống</a></p>
+    <p><a href="/themluatbenh">Thêm luật mới</a></p>
+</div>
+<div class="row" style="width: 94%; margin: 20px;">
+    <div style="width: 100%">
+        <table style="width: 100%">
+            <tr>
+          
+                <th>ID</th>
+                <th>Tên bệnh</th>
+                <th>Các triệu chứng</th>
+                <th>Biện pháp chữa trị</th>  
+                <th>Tùy chọn</th>
+
+            </tr>
+            <%rules.forEach(rule => {%>
+                <tr>
+                    <td><%=rule.id%></td>
+                    <td><%=rule.result.name%></td>
+                    <td>
+                        <%rule.events.forEach(event => {%>
+                            <p>- <%=event.name%></p> 
+                        <%})%>
+                    </td>
+                    <td>  
+                        <%let solutions = rule.result.solution.split('+')%>
+                        <%solutions.forEach(solution => {%>
+                            <p>- <%=solution%></p>
+                        <%})%>
+                        
+                    </td>
+                    <td>
+                        <button onclick="updateResult('<%=rule.result.id%>')">Chỉnh sửa</button>
+                    </td>
+                </tr>
+            <%})%>
+        </table>
+
+    </div>
+</div>
+<div class="modal" id="myModal">
+    
+</div>
+<script>
+    async function doUpdateResult(id) {
+        let newName = $('#name-text').val();
+        let newSolution = $('#solution-text').val();
+
+        let updatedResult = {
+            id: id,
+            name: newName,
+            solution: newSolution
+        }
+        $('#myModal').empty();
+        $('#myModal').modal('hide');
+        await $.post('/updateResult', updatedResult);
+        window.alert('Cập nhật thành công');
+    }
+
+    async function updateResult(id, isBenh) {
+
+        let rep = await $.get(`/result/${id}`);
+        let result = rep.result;
+        let type = isBenh == 'true' ? 'benh': 'giong';
+
+        let htm =  `
+        <form action = "/updateResult" method="POST" enctype="multipart/form-data">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Biện pháp chữa trị</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body form-group">
+                        <input name="id" value="${id}" hidden>
+                        <input name="type" value="${type}" hidden>
+                        <h4>Tên bệnh</h4>
+                        <input id="name-text" name="result" class="form-control" value="${result.name}">
+                        <hr>
+                        <h4>Biện pháp chữa trị</h4>
+                        <textarea id="solution-text" name="solution" class="form-control" style="height:400px;">${result.solution}</textarea>
+                        <h4>Thêm hình ảnh</h4>
+                        <input type="file" name="img" class="form-control">
+                    
+                </div>
+
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-default">Cập nhật</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Trở về</button>
+                </div>
+            </div>
+        </div>
+        </form>
+        `;
+        let modal = $('#myModal');
+        modal.empty();
+        modal.append(htm);
+        modal.modal('show');
+    }
+</script>

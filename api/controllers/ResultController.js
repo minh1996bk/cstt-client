@@ -30,7 +30,7 @@ module.exports = {
           
             if (uploadedFiles[0]) {
                 let fd = uploadedFiles[0].fd;
-                let url = fd.substring(fd.length - 40);
+                let url = '/images/' + fd.substring(fd.length - 40);
                 await Result.update({id: req.body.id})
                 .set({
                     name: req.body.name,
@@ -49,7 +49,7 @@ module.exports = {
 
                 })
             }
-            res.redirect(`/rules/${req.body.type}`);
+            res.ok()
         });
         
         

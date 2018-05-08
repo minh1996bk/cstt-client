@@ -1,16 +1,20 @@
 module.exports = {
-    run: async function(req, res) {
+    chuanDoanBenh: async function(req, res) {
 
         let eventNames = req.body.events;
-        let type = req.body.type;
-        let rules = await Rule.find({type: type}).populate('events');
+ 
+        let rules = await Rule.find({type: 'benh'}).populate('events');
         let length = rules.length;
         let resultId;
+        let rate;
+
         for (let i = 0; i < length; i ++) {
             let ruleEvents = rules[i].events;
             let match = ruleEvents.every(event => eventNames.includes(event.name));
             if (match) {
                 resultId = rules[i].result;
+                rate = rules[i].rate;
+                
                 break;
             }
         }
@@ -22,40 +26,23 @@ module.exports = {
             .populate('urls');
             result.urls = result.urls.map(url => url.value);
             return res.json({
+                rate: rate,
                 result: result
             })
         } else {
             res.json({
-                msg: "No result"
+                message: "No result",
             })
         }
-        // let result = {
-        //     name: 'Sâu cuốn lá',
-        //     events: [
-        //         {
-        //             name: 'lá vàng',
-        //         },
-        //         {
-        //             name: 'có sâu'
-        //         }
-        //     ],
-        //     urls: [
-        //         "http://9mobi.vn/cf/images/2015/03/nkk/hinh-dep-1.jpg",
-        //         "http://i.9mobi.vn/cf/images/2015/03/nkk/nhung-hinh-anh-dep-4.jpg",
-        //     ],
-        //     solution: "abc+cbc+dsasfd+dfasd+ádf"
-        // }
-        // res.json({
-        //     result: result
-        // });
+
     },
-    create: async function(req, res) {
+    taoluatbenh: async function(req, res) {
         // lay ra ten benh va tap cac su kien 
         let result = req.body.result;
         let events = req.body.events;
         let type = req.body.type;
+        let rate = req.body.rate;
 
-        
         // tao moi 1 benh neu no chua ton tai
         let newOrExistResult = await Result.findOrCreate({name: result, type: type}, {name: result, type: type});
 
@@ -75,7 +62,8 @@ module.exports = {
         // tao luat moi
         let newRule = await Rule.create({
             result: resultId,
-            type: type
+            type: type,
+            rate: rate,
         }).fetch();
         // tao lien ket giu luat vs events
         await Rule.addToCollection(newRule.id, 'events')
@@ -83,21 +71,15 @@ module.exports = {
         
         res.ok();
     },
-    gets: async function(req, res) {
+    quanlybenh: async function(req, res) {
         let type = req.params.type;
         let rules = await Rule.find({
             type: type
         }).populate('result').populate('events');
         
-        res.view('pages/rules', {
-          rules: rules,
-          isBenh: type == 'benh'
+        res.view('pages/quanlybenh', {
+          rules: rules
         });
     },
-    update: async function(req, res) {
-
-    },
-    delete: async function(req, res) {
-        
-    }
+   
 }

@@ -28,7 +28,7 @@ module.exports.routes = {
     view: 'pages/home'
   },
 
-  'post /search-result': 'RuleController.run',
+
 
   'get /expert' : {action: 'expert-page'},
 
@@ -39,8 +39,17 @@ module.exports.routes = {
 
   'get /findEvent' : 'EventsController.socketFindEvent',
   'get /findResult': 'ResultController.socketFindResult',
-  'get /rules/:type' : 'RuleController.gets',
- 
+
+
+  
+  'get /quanlybenh' : 'RuleController.quanlybenh',
+  'get /themluatbenh' : {
+    view: 'pages/themluatbenh'
+  },
+
+  //post
+  'post /taoluatbenh' : 'RuleController.taoluatbenh',
+  'post /chuandoanbenh': 'RuleController.chuanDoanBenh',
 
   /***************************************************************************
   *                                                                          *
