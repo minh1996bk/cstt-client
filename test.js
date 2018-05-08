@@ -8,4 +8,6 @@ function log() {
 function wrapper(foo) {
     foo();
 }
-console.log(undefined == false);
+let str = "abc\nabc";
+let newStr = str.replace('\n', '+');
+console.log(newStr);

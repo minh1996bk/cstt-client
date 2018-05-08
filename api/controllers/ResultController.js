@@ -16,6 +16,8 @@ module.exports = {
     },
     get: async function(req, res) {
         let result = await Result.findOne({id: req.params.id});
+        let formattedSolution = result.solution.replace("+", "\n");
+        result.solution = formattedSolution;
         res.json({
           result: result
         })
@@ -26,14 +28,23 @@ module.exports = {
         },async function (err, uploadedFiles) {
             if (err) return res.serverError(err);
           
-            let fd = uploadedFiles[0].fd;
-            let url = fd.substring(fd.length - 40);
-            await Result.update({id: req.body.id})
-            .set({
-                name: req.body.name,
-                solution: req.body.solution,
-                url: url
-            })
+            if (uploadedFiles[0]) {
+                let fd = uploadedFiles[0].fd;
+                let url = fd.substring(fd.length - 40);
+                await Result.update({id: req.body.id})
+                .set({
+                    name: req.body.name,
+                    solution: req.body.solution.replace('\n', '+'),
+                });
+                await Result.addToCollection(req.body.id, 'urls').members([url]);
+            } else {
+                await Result.update({id: req.body.id})
+                .set({
+                    name: req.body.name,
+                    solution: req.body.solution.replace('\n', '+'),
+
+                })
+            }
             res.redirect(`/rules/${req.body.type}`);
         });
         

@@ -45,13 +45,16 @@
                     <td><%=rule.result.name%></td>
                     <td>
                         <%rule.events.forEach(event => {%>
-                            <p><%=event.name%></p> 
+                            <p>- <%=event.name%></p> 
                         <%})%>
                     </td>
                     <td>
                       
-                        <p><%=rule.result.solution%></p>
                         
+                        <%let solutions = rule.result.solution.split('+')%>
+                        <%solutions.forEach(solution => {%>
+                            <p>- <%=solution%></p>
+                        <%})%>
                         
                     </td>
                     <td>

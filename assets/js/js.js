@@ -1,10 +1,7 @@
 
 
 var events = [];
-var images = [
-    "http://9mobi.vn/cf/images/2015/03/nkk/hinh-dep-1.jpg",
-    "http://i.9mobi.vn/cf/images/2015/03/nkk/nhung-hinh-anh-dep-4.jpg",
-];
+var images;
 var currentImg = 0;
 var key;
 var type = 'benh';
@@ -107,26 +104,44 @@ $('#search-result-btn').on('click', function() {
         events: events,
         type: type,
     }, function(data, status) {
+        let result = data.result;
+        let name = result.name;
+        let events = result.events;
+        let urls = result.urls;
+        let solution = result.solution;
+        
+        images = urls;
+        let eventsHtm = "";
+        events.forEach(event => {
+            eventsHtm += `<li>${event.name}</li>`;
+        })
+
+        let solutions = solution.split('+');
+        let solutionsHtm = "";
+        solutions.forEach(sol => {
+            solutionsHtm += `<li>${sol}</li>`;
+        })
+
         document.getElementById('search-container').style.top = "50px";
         let htm = `
-                <h1>Tên bệnh : Sâu cuốn lá</h1>
+                <hr>
+                <h1>Tên bệnh : ${name}</h1>
                 <hr>
                 <h2>Các triệu chứng: </h2>
                 <ul>
-                    <li>Lá vàng</li>
-                    <li>Có sâu</li>
+                    ${eventsHtm}
                 </ul>
                 <hr>
-                <h2>Một só hình ảnh</h2>
+                <h2>Một số hình ảnh</h2>
                 <div>
                     <button id="prevImg" onclick="nextImg()"><<</button>
                     <button id="nextImg" onclick="prevImg()">>></button>
-                    <img id="img-view" src="http://9mobi.vn/cf/images/2015/03/nkk/hinh-dep-1.jpg" style="width: 100%; height: 400px;">
+                    <img id="img-view" src="${images[0]}" style="width: 100%; height: 400px;">
                 </div>
                 <hr>
                 <h2>Biện pháp chữa trị</h2>
                 <ul>
-                    <li>Phun thuốc trừ sâu</li>
+                    ${solutionsHtm}
                 </ul>
         `;
         $('#search-result').empty();

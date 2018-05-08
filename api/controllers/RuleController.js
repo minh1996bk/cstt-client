@@ -1,10 +1,53 @@
 module.exports = {
     run: async function(req, res) {
 
-        let events = req.body.events;
-        
-    
-        res.ok();
+        let eventNames = req.body.events;
+        let type = req.body.type;
+        let rules = await Rule.find({type: type}).populate('events');
+        let length = rules.length;
+        let resultId;
+        for (let i = 0; i < length; i ++) {
+            let ruleEvents = rules[i];
+            let match = ruleEvents.every(event => eventNames.includes(event.name));
+            if (match) {
+                resultId = rules[i].result;
+                break;
+            }
+        }
+        if (resultId) {
+            let result = await Result.findOne({
+                id: resultId,
+            })
+            .populate('events')
+            .populate('urls');
+            result.urls = result.urls.map(url => url.value);
+            return res.json({
+                result: result
+            })
+        } else {
+            res.json({
+                msg: "No result"
+            })
+        }
+        // let result = {
+        //     name: 'Sâu cuốn lá',
+        //     events: [
+        //         {
+        //             name: 'lá vàng',
+        //         },
+        //         {
+        //             name: 'có sâu'
+        //         }
+        //     ],
+        //     urls: [
+        //         "http://9mobi.vn/cf/images/2015/03/nkk/hinh-dep-1.jpg",
+        //         "http://i.9mobi.vn/cf/images/2015/03/nkk/nhung-hinh-anh-dep-4.jpg",
+        //     ],
+        //     solution: "abc+cbc+dsasfd+dfasd+ádf"
+        // }
+        // res.json({
+        //     result: result
+        // });
     },
     create: async function(req, res) {
         // lay ra ten benh va tap cac su kien 
@@ -45,7 +88,7 @@ module.exports = {
         let rules = await Rule.find({
             type: type
         }).populate('result').populate('events');
-      
+        
         res.view('pages/rules', {
           rules: rules,
           isBenh: type == 'benh'
