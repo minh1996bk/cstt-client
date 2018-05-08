@@ -1,27 +1,9 @@
-# cstt
-
-a [Sails v1](https://sailsjs.com) application
-
-
-### Links
-
-+ [Get started](https://sailsjs.com/get-started)
-+ [Sails framework documentation](https://sailsjs.com/documentation)
-+ [Version notes / upgrading](https://sailsjs.com/documentation/upgrading)
-+ [Deployment tips](https://sailsjs.com/documentation/concepts/deployment)
-+ [Community support options](https://sailsjs.com/support)
-+ [Professional / enterprise options](https://sailsjs.com/enterprise)
-
-
-### Version info
-
-This app was originally generated on Sat May 05 2018 10:01:39 GMT+0700 (+07) using Sails v1.0.0.
-
-<!-- Internally, Sails used [`sails-generate@1.15.16`](https://github.com/balderdashy/sails-generate/tree/v1.15.16/lib/core-generators/new). -->
-
-
-
-<!--
-Note:  Generators are usually run using the globally-installed `sails` CLI (command-line interface).  This CLI version is _environment-specific_ rather than app-specific, thus over time, as a project's dependencies are upgraded or the project is worked on by different developers on different computers using different versions of Node.js, the Sails dependency in its package.json file may differ from the globally-installed Sails CLI release it was originally generated with.  (Be sure to always check out the relevant [upgrading guides](https://sailsjs.com/upgrading) before upgrading the version of Sails used by your app.  If you're stuck, [get help here](https://sailsjs.com/support).)
--->
+Chuẩn bị môi trường: Cài đặt node version > 8.11.0 và mariaDb
+Cài đặt chương trình chạy local khi sử dụng git:
+B1: Cài đặt module bằng dòng lệnh "npm install hoặc sudo npm install", đảm bảo không cài thiếu module
+B2: Cấu hình
+    - Vào config/model chỉnh sử migrate thành 'alter'
+    - Vào datastores chỉnh sửa lại url kết nối với cơ sở dữ liệu
+B3: Ở thư mục gốc chạy lênh "node migrate.js"
+B4: Chạy chương trình bằng lênh "node app.js"
 
