@@ -23,13 +23,15 @@
                     </div>
                     <div><input id="event-text" name="event" oninput="findEvent()" placeholder="Nhập vào các triệu chứng bệnh" class="form-control" style="width:100%"></div>
                     <div id="events-tag" class="events-tag" style="margin-top:10px" hidden>
-                        <h5 id="event-list-header">Tập các triệu chứng</h5>
+                        <h5 id="event-list-header">Tập các triệu chứng bệnh</h5>
                         <ul id="tag">
                             
                         </ul>
                     </div>
-                    <button id="search-result-btn" class="btn mybtn" style="border: 0.5px solid #b7bec9;">Tìm kiếm</button>
+                    <div style="margin-top: 10px;">
+                        <button id="search-result-btn" class="btn mybtn" style="border: 0.5px solid #b7bec9;">Chuẩn đoán</button>
     
+                    </div>
                 </div>
             </div>
         </div>
@@ -49,21 +51,10 @@
 <script>
     var resultIds = [];
     var images;
-    function resetAll() {
-        events = [];
-        images;
-        currentImg = 0;
-        key;
-        type = 'benh';
-        document.getElementById('search-container').style.top = '270px';
-        $('#tag').empty();
-        $('#event-list-header').val('Tập các triệu chứng');
-        $('#events-tag').hide();
-        $('#search-result').empty();
-    }
+   
 
     function renderBenh(result, rate) {
-  
+        document.getElementById('search-container').style.top = '50px';
         let eventsHtm = "";
         result.events.forEach(event => {
             eventsHtm += `<li>${event.name}</li>`;
@@ -107,6 +98,7 @@
     }
 
     function renderGiong(result) {
+        document.getElementById('search-container').style.top = '50px';
         let eventsHtm = "";
         result.events.forEach(event => {
             eventsHtm += `<li>${event.name}</li>`;
@@ -132,7 +124,7 @@
 
         let htm = `
                 <hr>
-                <h1>Tên giống lúa : ${name}</h1>
+                <h1>Tên giống lúa : ${result.name}</h1>
                 <hr>
                 <h2>Các đặc tính: </h2>
                 <ul>
@@ -174,6 +166,21 @@
                 }
                 
             });
+        } else {
+            $.post('/chongionglua', {
+                events: events,
+              
+            }, function(data, status) {
+                
+                if (data.result) {
+                    images = data.result.urls;
+                    
+                    renderGiong(data.result);
+                } else {
+                    showMessage();
+                }
+                
+            }); 
         }
         
         events = [];

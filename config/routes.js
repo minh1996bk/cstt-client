@@ -34,23 +34,28 @@ module.exports.routes = {
 
   'post /rule' : 'RuleController.create',
   'get /result/:id' : 'ResultController.get',
-  'post /updateResult': 'ResultController.update',
+  'post /updateBenh': 'ResultController.updateBenh',
+  'post /updateGiong': 'ResultController.updateGiong',
   //socket
 
   'get /findEvent' : 'EventsController.socketFindEvent',
   'get /findResult': 'ResultController.socketFindResult',
 
 
-  
+  //benh lua
   'get /quanlybenh' : 'RuleController.quanlybenh',
   'get /themluatbenh' : {
     view: 'pages/themluatbenh'
   },
-
-  //post
   'post /taoluatbenh' : 'RuleController.taoluatbenh',
   'post /chuandoanbenh': 'RuleController.chuanDoanBenh',
-
+  // chon giong
+  'get /quanlygiong' : 'RuleController.quanlygiong',
+  'get /themluatgiong' : {
+    view: 'pages/themluatgiong'
+  },
+  'post /taoluatgiong' : 'RuleController.taoluatgiong',
+  'post /chongionglua': 'RuleController.chonGiongLua',
   /***************************************************************************
   *                                                                          *
   * More custom routes here...                                               *

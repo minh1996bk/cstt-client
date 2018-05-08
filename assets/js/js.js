@@ -96,6 +96,8 @@ function prevImg() {
 
 $('#disease-mode-btn').on('click', function() {
     type = 'benh';
+    $('#event-list-header').text('Tập các triệu chứng bệnh');
+    $('#search-result-btn').text('Chuẩn đoán');
     events = [];
     $('#tag').empty();
     document.getElementById('disease-mode-btn').style.backgroundColor = "#f2f4f7";
@@ -105,6 +107,8 @@ $('#disease-mode-btn').on('click', function() {
 
 $('#planting-mode-btn').on('click', function() {
     type = 'giong';
+    $('#event-list-header').text('Tập các đặc tính của lúa');
+    $('#search-result-btn').text('Chọn giống');
     events = [];
     $('#tag').empty();
     document.getElementById('disease-mode-btn').style.backgroundColor = "inherit";

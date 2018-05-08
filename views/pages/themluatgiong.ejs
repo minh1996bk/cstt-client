@@ -1,0 +1,33 @@
+<div class="ui-widget" style="margin: 50px;">
+    <div class="form-group"> 
+        <label for="result-selector">Chọn giống: </label>
+        <input id="result-text" name="result" class="form-control" oninput="findResult()" placeholder="Điền giống lúa">
+        <label for="symptons-seletor">Chọn các đặc tính của giống lúa: </label>
+        <input id="event-text" class="form-control" oninput="findEvent()" placeholder="Điền vào các đặc tính của giông lúa">
+        <div id="event-list">
+            <div id="tag" style="margin: 10px;">
+                
+            </div>
+        </div>
+        <button id="tao-luat-giong-btn" class="btn mybtn " style="border: 0.5px solid #b7bec9">Tạo mới</button>
+    </div>
+</div>
+<script>
+    $('#tao-luat-giong-btn').on('click', function() {
+        let result = $('#result-text').val();
+        if (!result || !events) return;
+        let newRule = {
+            result: result,
+            events: events,
+ 
+        }
+        $.post('/taoluatgiong', newRule, function(data) {
+            events = [];
+            $('#tag').empty();
+            $('#result-text').val('');
+
+            window.alert('Tạo luật mới thành công');
+        });
+        
+    });
+</script>

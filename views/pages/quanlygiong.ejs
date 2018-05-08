@@ -1,64 +1,16 @@
 <div style="padding: 20px;">
-    
-    <%if (isBenh) {%>
-        <p><a href="/rules/giong">Quản lý luật chọng giống</a></p>
-    <%} else {%>
-        <p><a href="/rules/benh">Quản lý luật bệnh</a></p>
-    <%}%>
+    <p><a href="/quanlybenh">Quản lý luật bệnh</a></p>
+    <p><a href="/themluatgiong">Thêm luật mới</a></p>
 </div>
 <div class="row" style="width: 94%; margin: 20px;">
     <div style="width: 100%">
-
-        <button id="add-new-rule" class="btn mybtn" style="width: 100%">Thêm luật mới</button>
-        
-        <%if (isBenh) {%>
-            <div id="new-rule-form" class="ui-widget" hidden>
-                <div class="form-group"> 
-                    <label for="result-selector">Chọn bệnh: </label>
-                    <input id="result-text" name="result" class="form-control" oninput="findResult('<%=isBenh%>')" placeholder="Chọn bệnh">
-                    <label for="symptons-seletor">Chọn các triệu chứng: </label>
-                    <input id="event-text" class="form-control" oninput="findEvent('<%isBenh%>')" placeholder="Chon triệu chứng bệnh">
-                    <div id="event-list">
-                        <div id="tag" style="margin: 10px;">
-                            
-                        </div>
-                    </div>
-                    <label for="rate">Tỉ lệ</label>
-                    <input class="form-control" id="rate" type="range" max="100">
-                    <button id="create-rule-btn" class="btn mybtn" style="border: 0.5px solid #b7bec9">Tạo mới</button>
-                </div>
-            </div>
-        <%} else {%>
-            <div id="new-rule-form" class="ui-widget" hidden>
-                <div class="form-group"> 
-                    <label for="result-selector">Chọn giống lúa: </label>
-                    <input id="result-text" name="result" class="form-control" oninput="findResult('<%=isBenh%>')" placeholder="Chọn giống lúa">
-                    <label for="symptons-seletor">Chọn các đặc tính: </label>
-                    <input id="event-text" class="form-control" oninput="findEvent('<%isBenh%>')" placeholder="Chon đặc tính lúa">
-                    <div id="event-list">
-                        <div id="tag" style="margin: 10px;">
-                            
-                        </div>
-                    </div>
-                    <button id="create-rule-btn" class="btn mybtn" style="border: 0.5px solid #b7bec9">Tạo mới</button>
-                </div>
-            </div>
-        <%}%>
-
-        
         <table style="width: 100%">
             <tr>
-                <%if (isBenh) {%>
-                    <th>ID</th>
-                    <th>Tên bệnh</th>
-                    <th>Các triệu chứng</th>
-                    <th>Biện pháp chữa trị</th>
-                <%} else {%>
-                    <th>ID</th>
-                    <th>Tên giống lúa</th>
-                    <th>Các đặc điểm</th>
-                    <th>Thông tin chi tiết</th>    
-                <%}%>      
+            
+                <th>ID</th>
+                <th>Tên giống lúa</th>
+                <th>Các đặc tính</th>
+                <th>Thông tin chi tiết</th>  
                 <th>Tùy chọn</th>
 
             </tr>
@@ -71,9 +23,7 @@
                             <p>- <%=event.name%></p> 
                         <%})%>
                     </td>
-                    <td>
-                        
-                        
+                    <td>  
                         <%let solutions = rule.result.solution.split('+')%>
                         <%solutions.forEach(solution => {%>
                             <p>- <%=solution%></p>
@@ -81,7 +31,7 @@
                         
                     </td>
                     <td>
-                        <button onclick="updateResult('<%=rule.result.id%>')">Chỉnh sửa</button>
+                        <button onclick="updateGiong('<%=rule.result.id%>')">Chỉnh sửa</button>
                     </td>
                 </tr>
             <%})%>
@@ -92,3 +42,44 @@
 <div class="modal" id="myModal">
     
 </div>
+<script>
+
+    async function updateGiong(id) {
+
+        let rep = await $.get(`/result/${id}`);
+        let result = rep.result;
+        
+        let htm =  `
+        <form action = "/updateGiong" method="POST" enctype="multipart/form-data">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Thông tin giống lúa</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body form-group">
+                        <input name="id" value="${id}" hidden>
+                        <h4>Tên giống lúa</h4>
+                        <input id="name-text" name="result" class="form-control" value="${result.name}">
+                        <hr>
+                        <h4>Thông tin chi tiết</h4>
+                        <textarea id="solution-text" name="solution" class="form-control" style="height:400px;">${result.solution}</textarea>
+                        <h4>Thêm hình ảnh</h4>
+                        <input type="file" name="img" class="form-control">
+                    
+                </div>
+
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-default">Cập nhật</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Trở về</button>
+                </div>
+            </div>
+        </div>
+        </form>
+        `;
+        let modal = $('#myModal');
+        modal.empty();
+        modal.append(htm);
+        modal.modal('show');
+    }
+</script>
