@@ -7,7 +7,7 @@ module.exports = {
         let length = rules.length;
         let resultId;
         for (let i = 0; i < length; i ++) {
-            let ruleEvents = rules[i];
+            let ruleEvents = rules[i].events;
             let match = ruleEvents.every(event => eventNames.includes(event.name));
             if (match) {
                 resultId = rules[i].result;

@@ -36,7 +36,11 @@ module.exports = {
                     name: req.body.name,
                     solution: req.body.solution.replace('\n', '+'),
                 });
-                await Result.addToCollection(req.body.id, 'urls').members([url]);
+                let newUrl = await Url.create({
+                    value: url,
+                }).fetch();
+
+                await Result.addToCollection(req.body.id, 'urls').members([newUrl.id]);
             } else {
                 await Result.update({id: req.body.id})
                 .set({
