@@ -153,37 +153,40 @@ $('#nextImg').on('click', function() {
     document.getElementById('img-view').src = images[currentImg];
 })
 
-async function updateResult(id) {
+async function updateResult(id, isBenh) {
 
     let rep = await $.get(`/result/${id}`);
     let result = rep.result;
+    let type = isBenh == 'true' ? 'benh': 'giong';
+    console.log(type);
     let htm =  `
+    <form action = "/updateResult" method="POST" enctype="multipart/form-data">
     <div class="modal-dialog">
         <div class="modal-content">
-  
-            <!-- Modal Header -->
             <div class="modal-header">
-            <h4 class="modal-title">Biện pháp chữa trị</h4>
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Biện pháp chữa trị</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body form-group">
+                    <input name="id" value="${id}" hidden>
+                    <input name="type" value="${type}" hidden>
+                    <h4>Tên bệnh</h4>
+                    <input id="name-text" name="result" class="form-control" value="${result.name}">
+                    <hr>
+                    <h4>Biện pháp chữa trị</h4>
+                    <textarea id="solution-text" name="solution" class="form-control" style="height:400px;">${result.solution}</textarea>
+                    <h4>Thêm hình ảnh</h4>
+                    <input type="file" name="img" class="form-control">
+                   
             </div>
     
-            <!-- Modal body -->
-            <div class="modal-body">
-                <h4>Tên bệnh</h4>
-                <input id="name-text" value="${result.name}">
-                <hr>
-                <h4>Biện pháp chữa trị</h4>
-                <textarea id="solution-text">${result.solution}</textarea>
-            </div>
-    
-            <!-- Modal footer -->
             <div class="modal-footer">
-            <button type="button" class="btn btn-danger" onclick="doUpdateResult(${result.id})">Cập nhật</button>
-            <button type="button" class="btn btn-danger" data-dismiss="modal">Trở về</button>
+                <button type="submit" class="btn btn-default">Cập nhật</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Trở về</button>
             </div>
-  
         </div>
     </div>
+    </form>
     `;
     let modal = $('#myModal');
     modal.empty();

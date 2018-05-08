@@ -21,11 +21,22 @@ module.exports = {
         })
     },
     update: async function(req, res) {
-        await Result.update({id: req.body.id})
-        .set({
-          name: req.body.name,
-          solution: req.body.solution,
-        })
-        res.ok();
+        req.file('img').upload({
+            dirname: require('path').resolve(sails.config.appPath, 'assets/images')
+        },async function (err, uploadedFiles) {
+            if (err) return res.serverError(err);
+          
+            let fd = uploadedFiles[0].fd;
+            let url = fd.substring(fd.length - 40);
+            await Result.update({id: req.body.id})
+            .set({
+                name: req.body.name,
+                solution: req.body.solution,
+                url: url
+            })
+            res.redirect(`/rules/${req.body.type}`);
+        });
+        
+        
     }
 }

@@ -44,7 +44,7 @@ module.exports = {
         let rules = await Rule.find({
             type: type
         }).populate('result').populate('events');
-        
+      
         res.view('pages/rules', {
           rules: rules,
           isBenh: type == 'benh'

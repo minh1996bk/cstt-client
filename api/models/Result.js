@@ -8,7 +8,7 @@ module.exports = {
             type: 'string',
             isIn: ['benh', 'giong']
         },
-
+        url: 'string',
         events: {
             collection: 'events',
             via: 'results'
