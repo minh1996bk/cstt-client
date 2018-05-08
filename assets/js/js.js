@@ -12,7 +12,6 @@ var type = 'benh';
 function findEvent(isBenh) {
     let time = new Date().getTime();
     key = time;
-    console.log(isBenh);
     if (isBenh == 'true') {
         type = 'benh';
     } else if (isBenh == 'false'){
@@ -34,8 +33,6 @@ function findEvent(isBenh) {
 function findResult(isBenh) {
     let time = new Date().getTime();
     key = time;
-
-    console.log(isBenh);
     if (isBenh == 'true') {
         type = 'benh';
     } else if (isBenh == 'false'){
@@ -122,9 +119,9 @@ $('#search-result-btn').on('click', function() {
                 <hr>
                 <h2>Một só hình ảnh</h2>
                 <div>
-                    <button id="prevImg"><<</button>
+                    <button id="prevImg" onclick="nextImg()"><<</button>
+                    <button id="nextImg" onclick="prevImg()">>></button>
                     <img id="img-view" src="http://9mobi.vn/cf/images/2015/03/nkk/hinh-dep-1.jpg" style="width: 100%; height: 400px;">
-                    <button id="nextImg">>></button>
                 </div>
                 <hr>
                 <h2>Biện pháp chữa trị</h2>
@@ -144,21 +141,31 @@ $('#add-new-rule').on('click', function() {
     document.getElementById('new-rule-form').hidden = false;
 });
 
-$('#prevImg').on('click', function() {
-    currentImg = currentImg - 1 >= 0 ? currentImg - 1 : images.length - 1;
-    document.getElementById('img-view').src = images[currentImg];
-});
-$('#nextImg').on('click', function() {
+function nextImg() {
     currentImg = currentImg + 1 < images.length ? currentImg + 1 : 0;
     document.getElementById('img-view').src = images[currentImg];
-})
+}
+
+function prevImg() {
+    currentImg = currentImg - 1 >= 0 ? currentImg - 1 : images.length - 1;
+    document.getElementById('img-view').src = images[currentImg];
+}
+// $('#prevImg').on('click', function() {
+    
+//     currentImg = currentImg - 1 >= 0 ? currentImg - 1 : images.length - 1;
+//     document.getElementById('img-view').src = images[currentImg];
+// });
+// $('#nextImg').on('click', function() {
+//     currentImg = currentImg + 1 < images.length ? currentImg + 1 : 0;
+//     document.getElementById('img-view').src = images[currentImg];
+// })
 
 async function updateResult(id, isBenh) {
 
     let rep = await $.get(`/result/${id}`);
     let result = rep.result;
     let type = isBenh == 'true' ? 'benh': 'giong';
-    console.log(type);
+
     let htm =  `
     <form action = "/updateResult" method="POST" enctype="multipart/form-data">
     <div class="modal-dialog">
