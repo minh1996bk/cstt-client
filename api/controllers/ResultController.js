@@ -31,10 +31,11 @@ module.exports = {
             if (uploadedFiles[0]) {
                 let fd = uploadedFiles[0].fd;
                 let url = '/images/' + fd.substring(fd.length - 40);
+                
                 await Result.update({id: req.body.id})
                 .set({
                     name: req.body.name,
-                    solution: req.body.solution.replace('\n', '+'),
+                    solution: req.body.solution.split('\n').join('+'),
                 });
                 let newUrl = await Url.create({
                     value: url,
@@ -45,7 +46,7 @@ module.exports = {
                 await Result.update({id: req.body.id})
                 .set({
                     name: req.body.name,
-                    solution: req.body.solution.replace('\n', '+'),
+                    solution: req.body.solution.split('\n').join('+'),
 
                 })
             }
@@ -66,7 +67,7 @@ module.exports = {
                 await Result.update({id: req.body.id})
                 .set({
                     name: req.body.name,
-                    solution: req.body.solution.replace('\n', '+'),
+                    solution: req.body.solution.split('\n').join('+'),
                 });
                 let newUrl = await Url.create({
                     value: url,
@@ -77,7 +78,7 @@ module.exports = {
                 await Result.update({id: req.body.id})
                 .set({
                     name: req.body.name,
-                    solution: req.body.solution.replace('\n', '+'),
+                    solution: req.body.solution.split('\n').join('+'),
                 })
             }
             res.ok()

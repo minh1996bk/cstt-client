@@ -149,7 +149,7 @@ module.exports = {
         let rules = await Rule.find({
             type: 'benh',
         }).populate('result').populate('events');
-        
+        console.log(rules);
         res.view('pages/quanlybenh', {
           rules: rules
         });
