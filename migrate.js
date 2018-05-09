@@ -8,7 +8,7 @@ var connection = mysql.createConnection({
 
 connection.connect();
 // sua bang benh
-connection.query("alter table `result` modify `solution` text character set utf8 collate utf8_vietnamese_ci;", function(err, res) {
+connection.query("alter table `result` modify `solution` longtext character set utf8 collate utf8_vietnamese_ci;", function(err, res) {
     if (err) return console.error(err);
     else {
         console.log("1 column modified");
