@@ -42,13 +42,15 @@ module.exports = {
 
     },
     chonGiongLua: async function(req, res) {
-
+        delete req.session.lists;
+        delete req.session.current;
+        
         let eventNames = req.body.events;
  
         let rules = await Rule.find({type: 'giong'}).populate('events');
         let length = rules.length;
         let resultId;
-   
+        let lists = [];
 
         for (let i = 0; i < length; i ++) {
             let ruleEvents = rules[i].events.map(event => event.name);
@@ -57,17 +59,18 @@ module.exports = {
             if (match) {
                 resultId = rules[i].result;
 
-                
-                break;
+                lists.push(resultId);
             }
         }
-        if (resultId) {
+        if (lists[0]) {
             let result = await Result.findOne({
-                id: resultId,
+                id: lists[0],
             })
             .populate('events')
             .populate('urls');
             result.urls = result.urls.map(url => url.value);
+            req.session.lists = lists;
+            req.session.current = 0;
             return res.json({
                 result: result
             })
@@ -77,6 +80,26 @@ module.exports = {
             })
         }
 
+    },
+    getNext: async function(req, res) {
+        let lists = req.session.lists;
+        let length = lists.length;
+        let current = req.session.current;
+
+        let nextId = current + 1 < length ? current + 1 : 0;
+        req.session.current = nextId;
+        
+        let result = await Result.findOne({
+            id: lists[0],
+        })
+        .populate('events')
+        .populate('urls');
+        result.urls = result.urls.map(url => url.value);
+
+        return res.json({
+            result: result
+        })
+        
     },
     taoluatbenh: async function(req, res) {
         // lay ra ten benh va tap cac su kien 

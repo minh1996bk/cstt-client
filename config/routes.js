@@ -59,8 +59,10 @@ module.exports.routes = {
   },
   'post /taoluatgiong' : 'RuleController.taoluatgiong',
   'post /chongionglua': 'RuleController.chonGiongLua',
+  'get /nextRule' : 'RuleController.getNext',
   // su kien moi
   'get /quanlysukienmoi' : 'FactController.quanlysukienmoi',
+
   /***************************************************************************
   *                                                                          *
   * More custom routes here...                                               *

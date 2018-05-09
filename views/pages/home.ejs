@@ -142,11 +142,17 @@
                 <ul>
                     ${solutionsHtm}
                 </ul>
-                <p><a href="#">Xem trang tiếp</a></p>
+                <button onclick="loadNextPage()">Xem trang tiếp</button>
         `;
         $('#search-result').empty();
         $('#search-result').append(htm);
     }
+
+    async function loadNextPage() {
+        let nextRule = await $.get('/nextRule'); 
+        renderGiong(nextRule.result);
+    }
+
     $('#search-result-btn').on('click', function() {
         if (!events) return false;
         
