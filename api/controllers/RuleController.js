@@ -62,6 +62,7 @@ module.exports = {
                 lists.push(resultId);
             }
         }
+        console.log(lists);
         if (lists[0]) {
             let result = await Result.findOne({
                 id: lists[0],
@@ -85,12 +86,12 @@ module.exports = {
         let lists = req.session.lists;
         let length = lists.length;
         let current = req.session.current;
-
+    
         let nextId = current + 1 < length ? current + 1 : 0;
         req.session.current = nextId;
         
         let result = await Result.findOne({
-            id: lists[0],
+            id: lists[nextId],
         })
         .populate('events')
         .populate('urls');
@@ -172,7 +173,7 @@ module.exports = {
         let rules = await Rule.find({
             type: 'benh',
         }).populate('result').populate('events');
-        console.log(rules);
+
         res.view('pages/quanlybenh', {
           rules: rules
         });

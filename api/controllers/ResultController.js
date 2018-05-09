@@ -16,7 +16,7 @@ module.exports = {
     },
     get: async function(req, res) {
         let result = await Result.findOne({id: req.params.id});
-        let formattedSolution = result.solution.replace("+", "\n");
+        let formattedSolution = result.solution.split('+').join('\n');
         result.solution = formattedSolution;
         res.json({
           result: result
