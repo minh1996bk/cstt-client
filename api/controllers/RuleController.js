@@ -4,21 +4,23 @@ module.exports = {
         let eventNames = req.body.events;
  
         let rules = await Rule.find({type: 'benh'}).populate('events');
-        let length = rules.length;
-        let resultId;
-        let rate;
 
-        for (let i = 0; i < length; i ++) {
-            let ruleEvents = rules[i].events;
-            let match = ruleEvents.every(event => eventNames.includes(event.name));
-            if (match) {
-                resultId = rules[i].result;
-                rate = rules[i].rate;
-                
-                break;
-            }
-        }
-        if (resultId) {
+
+
+        rules = rules.filter(rule => {
+            return rule.events.every(event => {
+                return eventNames.includes(event.name);
+            })
+        })
+        .sort((r1, r2) => r2.rate - r1.rate);
+
+    
+
+
+        
+        
+        if (rules[0]) {
+            let resultId = rules[0].result;
             let result = await Result.findOne({
                 id: resultId,
             })
@@ -26,7 +28,7 @@ module.exports = {
             .populate('urls');
             result.urls = result.urls.map(url => url.value);
             return res.json({
-                rate: rate,
+                rate: rules[0].rate,
                 result: result
             })
         } else {

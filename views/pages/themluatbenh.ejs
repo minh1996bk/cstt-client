@@ -19,7 +19,10 @@
     $('#create-rule-btn').on('click', function() {
         let result = $('#result-text').val();
         let rate = $('#rate').val();
-        if (!result || !events) return;
+        if (!result || !events) {
+            window.alert("Bạn phải nhập vào tên bệnh và tập sự kiện");
+            return false;
+        }
         let newRule = {
             type: 'benh',
             result: result,

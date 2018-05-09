@@ -151,12 +151,15 @@
     async function loadNextPage() {
 
         let nextRule = await $.get('/nextRule'); 
-
+        images = nextRule.result.urls;
         renderGiong(nextRule.result);
     }
 
     $('#search-result-btn').on('click', function() {
-        if (!events) return false;
+        if (!events) {
+            window.alert('Bạn phải nhập vào tâp sự kiện và nhấn enter');
+            return false;
+        }
         
         $('#tag').empty();
         
