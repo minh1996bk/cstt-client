@@ -30,6 +30,11 @@ module.exports = {
                 result: result
             })
         } else {
+            
+            await Fact.create({
+                type: 'benh',
+                newevent: eventNames.join('+'),
+            })
             res.json({
                 message: "No result",
             })

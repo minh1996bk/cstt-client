@@ -11,13 +11,13 @@
                 <th>Lọai luật</th>
                 <th>Tập sự kiện</th>
             </tr>
-            <%rules.forEach(rule => {%>
+            <%facts.forEach(rule => {%>
                 <tr>
                     <td><%=rule.id%></td>
                     <td><%=rule.type%></td>
                     <td>
                         <%rule.events.forEach(event => {%>
-                            <p>- <%=event.name%></p> 
+                            <p>- <%=event%></p> 
                         <%})%>
                     </td>
                 </tr>
