@@ -3,7 +3,7 @@
     <button id="2" onclick="showLuatBenh()">Quản lý tập luật bệnh</button>
     <button class="btn" data-toggle="modal" data-target="#them-luat-benh-modal">Thêm luật bệnh</button>
     <button id="3" onclick="showLuatGiong()">Quản lý tập luật giống</button>
-    <button>Thêm luật chọn giống</button>
+    <button class="btn" data-toggle="modal" data-target="#them-luat-giong-modal">Thêm luật chọn giống</button>
     <button id="4" onclick="showBenh()">Quản lý tập bệnh</button>
     <button>Thêm bệnh mới</button>
     <button id="5" onclick="showGiong()">Quản lý tập giống</button>
@@ -71,20 +71,46 @@
     </div>
 </div>
           
-<div class="modal" id="them-luat-benh-modal">
+<div class="modal ui-widget" id="them-luat-benh-modal">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Modal Heading</h4>
+                <h4 class="modal-title">Thêm luật bệnh</h4>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
-            <div class="modal-body">
-                Modal body..
+            <div class="modal-body form-group">
+                <label for="chon-benh-lua-input">Bệnh lúa</label>
+                <input id="chon-benh-lua-input" class="form-control" placeholder="Chọn hoặc thêm mới bệnh">
+                <div id="tap-su-kien-benh">
+                    <h3>Tập sự kiện</h3>
+                </div>
+                <input id="chon-event-benh-input" class="form-control" placeholder="Chọn hoặc thêm mới sự kiện">
             </div>
-        
-              <!-- Modal footer -->
             <div class="modal-footer">
                 <button type="button" class="btn" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="them-luat-giong-modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Thêm luật chọn giống</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body form-group">
+                <label for="chon-giong-lua-input">Giống lúa</label>
+                <input id="chon-giong-lua-input" class="form-control" placeholder="Chọn hoặc thêm mới giong">
+                <div id="tap-su-kien-giong">
+                    <h3>Tập sự kiện</h3>
+                </div>
+                <input id="chon-event-giong-input" class="form-control" placeholder="Chọn hoặc thêm mới sự kiện">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn" data-dismiss="modal">Trở về</button>
             </div>
         </div>
     </div>

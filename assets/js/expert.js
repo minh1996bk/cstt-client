@@ -303,3 +303,64 @@ function suKienMoiHtm(fact) {
     `
 }
 
+function goiYEvent(inputId, type) {
+    let key = 0;
+    $(`#${inputId}`).on('input', function() {
+        let time = new Date().getTime();
+        key = time;
+        setTimeout(function() {
+            if (time === key) {
+                
+                let event = $(`#${inputId}`).val();
+                
+                io.socket.get('/findEvent', {event: event, type: type}, (res, jw) => {
+                    //just ignore
+                }) 
+            }
+        }, 200);
+    });
+
+    io.socket.on('findEvent', data => {
+ 
+        let eventNames = data.map(event => event.name);
+
+        $(`#${inputId}`).autocomplete({
+            source: eventNames,
+        })
+    });
+}
+
+function goiYResult(inputId, type) {
+    let key = 0;
+    $(`#${inputId}`).on('input', function() {
+        let time = new Date().getTime();
+        key = time;
+        setTimeout(function() {
+            if (time === key) {
+                
+                let result = $(`#${inputId}`).val();
+           
+                io.socket.get('/findResult', {result: result, type: type}, (res, jw) => {
+                    //just ignore
+                }) 
+            }
+        }, 200);
+    });
+
+    io.socket.on('findResult', data => {
+
+        let resultNames = data.map(result => result.name);
+        $(`#${inputId}`).autocomplete({
+            source: resultNames,
+        })
+    });
+}
+
+
+
+$(document).ready(function() {
+    goiYEvent('chon-event-benh-input', 'benh');
+    goiYEvent('chon-event-giong-input', 'giong');
+    goiYResult('chon-benh-lua-input', 'benh');
+    goiYResult('chon-giong-lua-input', 'giong');
+})
