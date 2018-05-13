@@ -46,6 +46,9 @@ module.exports.routes = {
   },
 
   //benh lua
+  'get /benh' : 'ResultController.getBenh',
+  'get /benhs' : 'ResultController.getBenhs',
+  'get /luatBenhs' : 'RuleController.getLuatBenhs',
   'get /quanlybenh' : 'RuleController.quanlybenh',
   'get /themluatbenh' : {
     view: 'pages/themluatbenh'
@@ -53,6 +56,9 @@ module.exports.routes = {
   'post /taoluatbenh' : 'RuleController.taoluatbenh',
   'post /chuandoanbenh': 'RuleController.chuanDoanBenh',
   // chon giong
+  'get /giong' : 'ResultController.getGiong',
+  'get /giongs' : 'ResultController.getGiongs',
+  'get /luatGiongs' : 'RuleController.getLuatGiongs',
   'get /quanlygiong' : 'RuleController.quanlygiong',
   'get /themluatgiong' : {
     view: 'pages/themluatgiong'
@@ -62,6 +68,7 @@ module.exports.routes = {
   'get /nextRule' : 'RuleController.getNext',
   // su kien moi
   'get /quanlysukienmoi' : 'FactController.quanlysukienmoi',
+  'get /suKienMois' : 'FactController.getSuKienMois',
 
   /***************************************************************************
   *                                                                          *

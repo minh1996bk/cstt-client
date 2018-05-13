@@ -188,6 +188,24 @@ module.exports = {
         res.view('pages/quanlygiong', {
           rules: rules
         });
-    }   
+    },
+    getLuatBenhs: async function(req, res) {
+        let rules = await Rule.find({
+            type: 'benh',
+        }).populate('result').populate('events');
+        return res.json({
+            success: true,
+            rules: rules
+        })
+    },
+    getLuatGiongs: async function(req, res) {
+        let rules = await Rule.find({
+            type: 'giong',
+        }).populate('result').populate('events');
+        return res.json({
+            success: true,
+            rules: rules
+        })
+    }
    
 }

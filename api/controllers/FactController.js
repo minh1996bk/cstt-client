@@ -11,5 +11,18 @@ module.exports = {
         return res.view('pages/facts', {
             facts: facts
         });
+    },
+    getSuKienMois: async function(req, res) {
+        let facts = await Fact.find({});
+
+        facts.forEach(fact => {
+            fact.events = fact.newevent.split("+");
+            delete fact.newevent;
+        })
+        return res.json({
+            success: true,
+            facts: facts
+        })
+
     }
 }

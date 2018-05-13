@@ -84,5 +84,46 @@ module.exports = {
             res.ok()
         });
         
+    },
+    getBenhs: async function(req, res) {
+        let benhs = await Result.getBenhs();
+        return res.json({
+            success: true,
+            benhs: benhs
+        })
+    },
+    getGiongs: async function(req, res) {
+        let giongs = await Result.getGiongs();
+        return res.json({
+            success: true,
+            giongs: giongs
+        })
+    },
+    getBenh: async function(req, res) {
+        let benh = await Result.findOne({
+            id: req.query.id,
+            type: 'benh',
+        }).populate('events').populate('urls').populate('rules');
+        benh.urls = benh.urls.map(url => url.value);
+        benh.events = benh.events.map(event => event.name);
+        benh.ruleCount = benh.rules.length;
+        delete benh.rules;
+        return res.json({
+            success: true,
+            benh: benh,
+        })
+    },
+    getGiong: async function(req ,res) {
+        let giong = await Result.findOne({
+            id: req.query.id,
+            type: 'giong',
+        }).populate('events').populate('urls');
+        giong.urls = giong.urls.map(url => url.value);
+        giong.events = giong.events.map(event => event.name);
+      
+        return res.json({
+            success: true,
+            giong: giong,
+        })
     }
 }

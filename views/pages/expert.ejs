@@ -1,11 +1,69 @@
-<div>
-    <ul>
-        <li>
-            <p><a href="/quanlysukienmoi">Trang quản lý sự kiện mới</a></p>
-            <p><a href="/quanlybenh">Trang quản lý luật bệnh</a></p>
-            <p><a href="/quanlygiong">Trang quản lý luật chọn giống</a></p>
-            <p><a href="/themluatbenh">Trang quản lý thêm luật bệnh</a></p>
-            <p><a href="/themluatgiong">Trang quản lý luật luật chọn giống</a></p>
-        </li>
-    </ul>
+<div class="sidenav">
+    <button id="1" onclick="showSuKienMoi()">Quản lý tập sự kiện mới</button>
+    <button id="2" onclick="showLuatBenh()">Quản lý tập luật bệnh</button>
+    <button id="3" onclick="showLuatGiong()">Quản lý tập luật giống</button>
+    <button id="4" onclick="showBenh()">Quản lý tập bệnh</button>
+    <button id="5" onclick="showGiong()">Quản lý tập giống</button>
+    <button id="6" onclick="">Quản lý tập triệu chứng bệnh</button>
+    <button id="7" onclick="">Quản lý tập đặc tính lúa</button>
 </div>
+<div class="main">
+    <div id="main-view">
+    
+       
+    </div>
+
+</div>
+
+
+<div class="modal" id="benh-modal">
+    <div class="modal-dialog">
+        <div class="modal-content" style="width: 1100px;margin-left: -270px">
+    
+
+            <div class="modal-header">
+            <h4 class="modal-title">Thông tin bệnh</h4>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+    
+            <!-- Modal body -->
+            <div id="benh-modal-body" class="modal-body">
+                
+            </div>
+    
+            <!-- Modal footer -->
+            <div class="modal-footer">
+            <button type="button" class="btn" data-dismiss="modal">Trở về </button>
+            </div>
+    
+        </div>
+    </div>
+</div>
+      
+
+
+
+<div class="modal" id="giong-modal">
+    <div class="modal-dialog">
+        <div class="modal-content" style="width: 1100px;margin-left: -270px">
+    
+
+            <div class="modal-header">
+            <h4 class="modal-title">Thông tin giống lúa</h4>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+    
+            <!-- Modal body -->
+            <div id="giong-modal-body" class="modal-body">
+                
+            </div>
+    
+            <!-- Modal footer -->
+            <div class="modal-footer">
+            <button type="button" class="btn" data-dismiss="modal">Trở về </button>
+            </div>
+    
+        </div>
+    </div>
+</div>
+          

@@ -115,3 +115,5 @@ $('#planting-mode-btn').on('click', function() {
     document.getElementById('planting-mode-btn').style.backgroundColor = "#f2f4f7";
     document.getElementById('event-text').placeholder = "Nhập vào các đặc tính lúa";
 });
+
+
