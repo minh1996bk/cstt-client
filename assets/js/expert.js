@@ -166,34 +166,36 @@ function luatBenhHtm(rule) {
         eventsHtm += `<li>${event.name}</li>`
     })
     return `
-    <div class="row my-well-div">
-        <div class="col-md-6">
-            <h3>Thông tin luật</h3>
-            <p>Mã luật: ${rule.id}</p>
-            <p>
-                Người tạo: Nguyen Dinh Minh
-            </p>
-            <p>
-                Ngày tạo: ${formatDate(rule.createdAt)}
-            </p>
-            <p>
-                Ngày cập nhật: ${formatDate(rule.updatedAt)}
-            </p>
-            <p>
-                Mã bệnh: ${rule.result.id}
-            </p>
-            <p>Tên bệnh: <span onclick="xemChiTietBenh(${rule.result.id})" class="like-link">${rule.result.name}</span></p>
-            <p>Tỉ lệ chính xác: ${rule.rate}</p>
-        </div>
-        <div class="col-md-6">
-            <h3>Tập triệu chứng</h3>
-            <ul>
-                ${eventsHtm}
-                <li>
-                    <input>
-                    <button>+</button>
-                </li>
-            </ul>
+    <div class="my-well-div">
+        <div class="row" style="padding:10px;">
+            <div class="col-md-6">
+                <h3>Thông tin luật</h3>
+                <p>Mã luật: ${rule.id}</p>
+                <p>
+                    Người tạo: Nguyen Dinh Minh
+                </p>
+                <p>
+                    Ngày tạo: ${formatDate(rule.createdAt)}
+                </p>
+                <p>
+                    Ngày cập nhật: ${formatDate(rule.updatedAt)}
+                </p>
+                <p>
+                    Mã bệnh: ${rule.result.id}
+                </p>
+                <p>Tên bệnh: <span onclick="xemChiTietBenh(${rule.result.id})" class="like-link">${rule.result.name}</span></p>
+                <p>Tỉ lệ chính xác: ${rule.rate}</p>
+            </div>
+            <div class="col-md-6">
+                <h3>Tập triệu chứng</h3>
+                <ul>
+                    ${eventsHtm}
+                    <li>
+                        <input>
+                        <button>+</button>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
     `
@@ -205,33 +207,35 @@ function luatGiongHtm(rule) {
         eventsHtm += `<li>${event.name}</li>`
     })
     return `
-    <div class="row my-well-div">
-        <div class="col-md-6">
-            <h3>Thông tin luật</h3>
-            <p>Mã luật: ${rule.id}</p>
-            <p>
-                Người tạo: Nguyen Dinh Minh
-            </p>
-            <p>
-                Ngày tạo: ${formatDate(rule.createdAt)}
-            </p>
-            <p>
-                Ngày cập nhật: ${formatDate(rule.updatedAt)}
-            </p>
-            <p>
-                Mã giống lúa: ${rule.result.id}
-            </p>
-            <p>Tên giống lúa: <span onclick="xemChiTietGiong(${rule.result.id})" class="like-link">${rule.result.name}</span></p>
-        </div>
-        <div class="col-md-6">
-            <h3>Tập đặc tính lúa</h3>
-            <ul>
-                ${eventsHtm}
-                <li>
-                    <input>
-                    <button>+</button>
-                </li>
-            </ul>
+    <div class="my-well-div">
+        <div class="row" style="padding:10px;">
+            <div class="col-md-6">
+                <h3>Thông tin luật</h3>
+                <p>Mã luật: ${rule.id}</p>
+                <p>
+                    Người tạo: Nguyen Dinh Minh
+                </p>
+                <p>
+                    Ngày tạo: ${formatDate(rule.createdAt)}
+                </p>
+                <p>
+                    Ngày cập nhật: ${formatDate(rule.updatedAt)}
+                </p>
+                <p>
+                    Mã giống lúa: ${rule.result.id}
+                </p>
+                <p>Tên giống lúa: <span onclick="xemChiTietGiong(${rule.result.id})" class="like-link">${rule.result.name}</span></p>
+            </div>
+            <div class="col-md-6">
+                <h3>Tập đặc tính lúa</h3>
+                <ul>
+                    ${eventsHtm}
+                    <li>
+                        <input>
+                        <button>+</button>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
     `
@@ -298,3 +302,4 @@ function suKienMoiHtm(fact) {
     </div>
     `
 }
+
