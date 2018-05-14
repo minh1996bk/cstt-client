@@ -85,7 +85,7 @@
                 <hr>
                 ${imgHtm}
                 <h2>Biện pháp chữa trị</h2>
-                <textarea class='form-control view-text' readonly>${result.solution}</textarea>
+                <textarea class='form-control view-text' readonly>${result.solution.split("+").join("\n")}</textarea>
                 <hr>
                 <p><a href="#">Xem trang tiếp</a></p>
         `;
@@ -130,7 +130,7 @@
                 ${imgHtm}
       
                 <h2>Thông tin chi tiết</h2>
-                <textarea class='form-control view-text' readonly>${result.solution}</textarea>
+                <textarea class='form-control view-text' readonly>${result.solution.split('+').join('\n')}</textarea>
                 <button onclick="loadNextPage()">Xem trang tiếp</button>
         `;
         $('#search-result').empty();

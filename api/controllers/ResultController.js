@@ -50,7 +50,7 @@ module.exports = {
     capNhatContent: async function(req, res) {
         await Result.update({id: req.body.resultId})
         .set({
-            solution: req.body.solution
+            solution: req.body.solution.split('\n').join('+')
         })
         return res.json({
             success: true

@@ -74,7 +74,7 @@ function benhHtm(benh) {
             <hr>
             <div class="footer form-group" style="margin: 5px;border-radius:2px;padding:4px;">
                 <h3>Phương pháp chữa trị</h3>
-                <textarea id='textarea-${benh.id}' class='form-control'>${benh.solution.split('+').join('\n')}</textarea>
+                <textarea style='height: 300px;' id='textarea-${benh.id}' class='form-control'>${benh.solution.split('+').join('\n')}</textarea>
                 <button class='btn' onclick="capNhatThongTinResult('${benh.id}', 'textarea-${benh.id}')">Cập nhật</button>
             </div>
         </div>
@@ -237,7 +237,7 @@ function giongHtm(giong) {
             <hr>
             <div class="footer form-group" style="margin: 5px;border-radius:2px;padding:4px;">
                 <h3>Thông tin chi tiết</h3>
-                <textarea id='textarea-${giong.id}' class='form-control'>${giong.solution.split('+').join('\n')}</textarea>
+                <textarea style='height: 300px;' id='textarea-${giong.id}' class='form-control'>${giong.solution.split('+').join('\n')}</textarea>
                 <button class='btn' onclick="capNhatThongTinResult('${giong.id}', 'textarea-${giong.id}')">Cập nhật</button>
             </div>
         </div>
