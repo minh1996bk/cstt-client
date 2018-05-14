@@ -55,7 +55,6 @@ function benhHtm(benh) {
      
                         <input id='inputImg-${benh.id}' type='file'>
                         <button onclick="uploadResultImage(${benh.id}, 'inputImg-${benh.id}')">OK</button>
-                       
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -245,7 +244,7 @@ function giongHtm(giong) {
 }
 
 function changeBtnColor(selectId) {
-    [1, 2, 3, 4, 5, 6, 7, 8, 9].forEach(id => {
+    [1, 2, 3, 4, 5, 6, 7].forEach(id => {
         if (id == selectId) {
             document.getElementById(id).style.backgroundColor = "#c9f4b2";
         } else {
@@ -304,11 +303,11 @@ function luatBenhHtm(rule) {
             </div>
             <div class="col-md-6">
                 <h3>Tập triệu chứng</h3>
-                <ul>
+                <ul id="ul-event-list-${rule.id}">
                     ${eventsHtm}
                     <li>
-                        <input>
-                        <button>+</button>
+                        <input id="input-event-${rule.id}" placeholder="Nhâp tên triệu chứng mới cho luật">
+                        <button onclick="themSuKienChoLuat('${rule.id}', '${rule.result.id}', 'benh', 'input-event-${rule.id}', 'ul-event-list-${rule.id}')">Thêm</button>
                     </li>
                 </ul>
             </div>
@@ -344,17 +343,38 @@ function luatGiongHtm(rule) {
             </div>
             <div class="col-md-6">
                 <h3>Tập đặc tính lúa</h3>
-                <ul>
+                <ul id="ul-event-list-${rule.id}">
                     ${eventsHtm}
                     <li>
-                        <input>
-                        <button>+</button>
+                        <input id="input-event-${rule.id}" placeholder="Nhập đặc tính mới cho luật">
+                        <button onclick="themSuKienChoLuat('${rule.id}', '${rule.result.id}', 'giong', 'input-event-${rule.id}', 'ul-event-list-${rule.id}')">Thêm</button>
                     </li>
                 </ul>
             </div>
         </div>
     </div>
     `
+}
+
+async function themSuKienChoLuat(ruleId, resultId, type, inputId, ulListEventsId) {
+    let input = $(`#${inputId}`);
+    let eventVal = input.val();
+    if (!eventVal) return window.alert("Bạn phải nhập sự kiện mới");
+    let ul = $(`#${ulListEventsId}`);
+    let rep = await $.post('/themSuKienChoLuat', {
+        ruleId: ruleId,
+        resultId: resultId,
+        type: type,
+        newEvent: eventVal
+    });
+
+    if (rep.success) {
+        window.alert("Thêm thành công");
+        input.val("");
+        ul.prepend(`<li>${eventVal}</li>`);
+    } else {
+        window.alert("Có lỗi xảy ra");
+    }
 }
 
 function formatDate(string) {

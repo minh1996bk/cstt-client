@@ -70,7 +70,8 @@ module.exports.routes = {
   'get /quanlysukienmoi' : 'FactController.quanlysukienmoi',
   'get /suKienMois' : 'FactController.getSuKienMois',
   //upload image
-  'post /uploadImage' : 'ResultController.addImgToResult'
+  'post /uploadImage' : 'ResultController.addImgToResult',
+  'post /themSuKienChoLuat' : 'RuleController.themSuKienChoLuat',
   /***************************************************************************
   *                                                                          *
   * More custom routes here...                                               *

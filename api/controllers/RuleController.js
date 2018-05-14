@@ -64,7 +64,7 @@ module.exports = {
                 lists.push(resultId);
             }
         }
-        console.log(lists);
+    
         if (lists[0]) {
             let result = await Result.findOne({
                 id: lists[0],
@@ -206,6 +206,33 @@ module.exports = {
             success: true,
             rules: rules
         })
+    },
+    themSuKienChoLuat: async function(req, res) {
+        let ruleId = req.body.ruleId;
+        let resultId = req.body.resultId;
+        let type = req.body.type;
+        let newEvent = req.body.newEvent;
+
+
+        let newOrExistEvent = await Events.findOrCreate({
+            name: newEvent,
+            type: type
+        }, {
+            name: newEvent, 
+            type: type
+        });
+        let newEventId = newOrExistEvent.id;
+
+        await Result.addToCollection(resultId, 'events')
+        .members([newEventId]);
+
+        await Rule.addToCollection(ruleId, 'events')
+        .members([newEventId]);
+
+        res.json({
+            success: true
+        })
+
     }
    
 }
