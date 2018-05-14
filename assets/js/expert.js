@@ -303,15 +303,19 @@ function suKienMoiHtm(fact) {
     `
 }
 
-function goiYEvent(inputId, type) {
+function goiYEvent(modalId, inputId, ulEvents, type, btnTaoLuatId, resultInputId, url, rateInputId) {
     let key = 0;
-    $(`#${inputId}`).on('input', function() {
+    let events = new Set();
+    
+    let input = $(`#${inputId}`);
+
+    input.on('input', function() {
         let time = new Date().getTime();
         key = time;
         setTimeout(function() {
             if (time === key) {
                 
-                let event = $(`#${inputId}`).val();
+                let event = input.val();
                 
                 io.socket.get('/findEvent', {event: event, type: type}, (res, jw) => {
                     //just ignore
@@ -319,6 +323,52 @@ function goiYEvent(inputId, type) {
             }
         }, 200);
     });
+   input.on('keypress', function(e) {
+  
+        if (e.keyCode === 13) {
+            let val = input.val();
+            input.val("");
+
+            events.add(val);
+            $(`#${ulEvents}`).append(`<li>${val}</li>`)
+        }
+
+    })
+
+    $(`#${btnTaoLuatId}`).on('click', function() {
+        let result = $(`#${resultInputId}`).val();
+        if (!result) {
+            return window.alert('Bạn phải nhập trường kết quả của luật');
+        }
+        let eventsArr = Array.from(events);
+     
+        if (eventsArr.length === 0) {
+            return window.alert('Bạn phải vào ít nhât 1 sự kiện');
+        }
+        let rate = 100;
+        if (rateInputId) {
+            rate = $(`#${rateInputId}`).val() || 100;
+        }
+
+        let newRule = {
+            type: type,
+            result: result,
+            events: eventsArr,
+            rate: rate
+        }
+        
+        $.post(url, newRule, function(data, status) {
+            window.alert("Thêm mới luật thành công");
+            events = new Set();
+            $(`#${modalId}`).modal('hide');
+            $(`#${ulEvents}`).empty();
+            $(`#${resultInputId}`).val("");
+            $(`#${rateInputId}`).val(100);
+        })
+
+        
+
+    })
 
     io.socket.on('findEvent', data => {
  
@@ -328,6 +378,8 @@ function goiYEvent(inputId, type) {
             source: eventNames,
         })
     });
+
+
 }
 
 function goiYResult(inputId, type) {
@@ -359,8 +411,14 @@ function goiYResult(inputId, type) {
 
 
 $(document).ready(function() {
-    goiYEvent('chon-event-benh-input', 'benh');
-    goiYEvent('chon-event-giong-input', 'giong');
+    goiYEvent('them-luat-benh-modal','chon-event-benh-input', 'ul-benh-events', 'benh', 'tao-luat-benh', 'chon-benh-lua-input', '/taoluatbenh', 'ti-le-chinh-xac');
+    goiYEvent('them-luat-giong-modal', 'chon-event-giong-input', 'ul-giong-events', 'giong', 'tao-luat-giong', 'chon-giong-lua-input', '/taoluatgiong');
     goiYResult('chon-benh-lua-input', 'benh');
     goiYResult('chon-giong-lua-input', 'giong');
 })
+
+function themSuKien(event, inputId) {
+    if (event.key == 'Enter') {
+        console.log('ok');
+    }
+}

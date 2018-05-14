@@ -83,11 +83,17 @@
                 <input id="chon-benh-lua-input" class="form-control" placeholder="Chọn hoặc thêm mới bệnh">
                 <div id="tap-su-kien-benh">
                     <h3>Tập sự kiện</h3>
+                    <ul id="ul-benh-events">
+
+                    </ul>
                 </div>
-                <input id="chon-event-benh-input" class="form-control" placeholder="Chọn hoặc thêm mới sự kiện">
+                <input id="chon-event-benh-input" onkeypress="return themSuKien(event, 'chon-event-benh-input')" class="form-control" placeholder="Chọn hoặc thêm mới sự kiện">
+                <label for="">Tỉ lệ chính xác</label>
+                <input id="ti-le-chinh-xac" value="100" class="form-control" type="number">
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn" data-dismiss="modal">Close</button>
+                <button type="button" id="tao-luat-benh" class="btn">Thực thi</button>
+                <button type="button" class="btn" data-dismiss="modal">Trở về</button>
             </div>
         </div>
     </div>
@@ -105,11 +111,14 @@
                 <input id="chon-giong-lua-input" class="form-control" placeholder="Chọn hoặc thêm mới giong">
                 <div id="tap-su-kien-giong">
                     <h3>Tập sự kiện</h3>
+                    <ul id="ul-giong-events">
+                        
+                    </ul>
                 </div>
                 <input id="chon-event-giong-input" class="form-control" placeholder="Chọn hoặc thêm mới sự kiện">
-
             </div>
             <div class="modal-footer">
+                <button type="button" id="tao-luat-giong" class="btn">Thực thi</button>
                 <button type="button" class="btn" data-dismiss="modal">Trở về</button>
             </div>
         </div>
