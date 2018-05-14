@@ -22,6 +22,41 @@ module.exports = {
           result: result
         })
     },
+    addImgToResult: async function(req, res) {
+        req.file('img').upload({
+            dirname: require('path').resolve(sails.config.appPath, 'assets/images')
+        },async function (err, uploadedFiles) {
+            if (err) return res.serverError(err);
+    
+            if (uploadedFiles[0]) {
+                let fd = uploadedFiles[0].fd;
+                let url = '/images/' + fd.substring(fd.length - 40);
+                let newUrl = await Url.create({
+                    value: url,
+                }).fetch();
+
+                await Result.addToCollection(req.body.resultId, 'urls').members([newUrl.id]);
+                res.json({
+                    success: true,
+                    url: url
+                })
+            } else {
+                return res.json({
+                    success: false
+                })
+            }    
+        });
+    },
+    capNhatContent: async function(req, res) {
+        await Result.update({id: req.body.resultId})
+        .set({
+            solution: req.body.solution
+        })
+        return res.json({
+            success: true
+        })
+    },
+
     updateBenh: async function(req, res) {
         req.file('img').upload({
             dirname: require('path').resolve(sails.config.appPath, 'assets/images')

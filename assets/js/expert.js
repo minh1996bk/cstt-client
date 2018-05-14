@@ -5,14 +5,14 @@ function appendHtm(divId, htm) {
     div.empty();
     div.append(htm);
 }
-async function showBenh() {
+async function showBenh(btnId) {
     let rep = await $.get('/benhs');
 
     let htm = "";
     rep.benhs.forEach(benh => {
         htm += benhHtm(benh);
     });
-    changeBtnColor(4);
+    changeBtnColor(btnId);
     appendHtm('main-view', htm);
 }
 
@@ -22,6 +22,16 @@ function benhHtm(benh) {
     benh.events.forEach(event => {
         eventsHtm += `<li>${event}</li>`
     })
+
+    let urlHtm = "";
+    let length = benh.urls.length;
+
+    benh.urls.forEach(url => {
+        
+        urlHtm += `
+            <input value="${url}" hidden>
+        `
+    })
     return `
     <div class="my-well-div">
             <div class="header" style="padding: 5px;">
@@ -30,19 +40,22 @@ function benhHtm(benh) {
             </div>
             <hr>
             <div class="row">
-                
                 <div class="col-md-6">
-                    
                     <div class="div-img">
                         <h3>Hình ảnh</h3>
-                        <img class="my-img" src="${benh.urls[0]}">
+                        <img id="img-view-${benh.id}" class="my-img" src="${benh.urls[0]}">
+                    </div>
+                    <div id="divImgSrc-${benh.id}">
+                        ${urlHtm}
                     </div>
                     <div class="div-img">
-                        <button><<</button>
-                        <span>1 of 2</span>
-                        <button>>></button>
-                        <button>+</button>
-                        <button>X</button>
+                        <button onclick="prevImage('divImgSrc-${benh.id}', 'img-view-${benh.id}')"><<</button>
+                        
+                        <button onclick="nextImage('divImgSrc-${benh.id}', 'img-view-${benh.id}')">>></button>
+     
+                        <input id='inputImg-${benh.id}' type='file'>
+                        <button onclick="uploadResultImage(${benh.id}, 'inputImg-${benh.id}')">OK</button>
+                       
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -59,22 +72,108 @@ function benhHtm(benh) {
                 </div>
             </div>
             <hr>
-            <div class="footer" style="margin: 5px;border-radius:2px;padding:4px;">
+            <div class="footer form-group" style="margin: 5px;border-radius:2px;padding:4px;">
                 <h3>Phương pháp chữa trị</h3>
-                <p>${benh.solution}</p>
+                <textarea id='textarea-${benh.id}' class='form-control'>${benh.solution.split('+').join('\n')}</textarea>
+                <button class='btn' onclick="capNhatThongTinResult('${benh.id}', 'textarea-${benh.id}')">Cập nhật</button>
             </div>
         </div>
     `;
 }
 
-async function showGiong() {
+async function capNhatThongTinResult(resultId, textareaId) {
+    let content = $(`#${textareaId}`).val();
+    let rep = await $.post('/capNhatContent', {
+        resultId: resultId,
+        solution: content
+    });
+    if (rep.success) {
+        window.alert('Cập nhật thành công');
+    } else {
+        window.alert('Có lỗi xảy ra');
+    }
+    
+}
+
+function prevImage(divSrcImgId, imgViewId) {
+    let divSrcImg = $(`#${divSrcImgId}`);
+ 
+    let inputs = divSrcImg.find('input');
+    let urls = [];
+    let length = inputs.length;
+
+
+    for (let i = 0; i < length; i ++) {
+        urls.push(inputs[i].value);
+    }
+    
+    let currentImgUrl = document.getElementById(imgViewId).src.slice(-48);
+    let currentIndex = urls.indexOf(currentImgUrl);
+    if (currentIndex > -1) {
+        let prevImgUrl = currentIndex - 1 < 0 ? urls[length - 1] : urls[currentIndex - 1];
+        document.getElementById(imgViewId).src = prevImgUrl;
+    }
+
+
+}
+
+function nextImage(divSrcImgId, imgViewId) {
+    let divSrcImg = $(`#${divSrcImgId}`);
+ 
+    let inputs = divSrcImg.find('input');
+    let urls = [];
+    let length = inputs.length;
+
+
+    for (let i = 0; i < length; i ++) {
+        urls.push(inputs[i].value);
+    }
+    let currentImgUrl = document.getElementById(imgViewId).src.slice(-48);
+    let currentIndex = urls.indexOf(currentImgUrl);
+    if (currentIndex > -1) {
+        let nextImgUrl = currentIndex + 1 < length ? urls[currentIndex + 1] : urls[0];
+        document.getElementById(imgViewId).src = nextImgUrl;
+    }
+}
+
+async function uploadResultImage(resultId, inputImgId) {
+
+    var file_data = $(`#${inputImgId}`).prop('files')[0];
+    if (!file_data) return window.alert('Chưa chọn ảnh')
+
+    var form_data = new FormData();
+
+    form_data.append('img', file_data);
+
+
+    form_data.append('resultId', resultId);
+
+    let rep = await $.ajax({
+        url: 'uploadImage', 
+        dataType: 'text',
+        cache: false,
+        contentType: false,
+        processData: false,
+        data: form_data,                       
+        type: 'post',
+        
+    });
+    rep = JSON.parse(rep);
+    if (rep.success) {
+        $(`#${inputImgId}`).val("");
+        window.alert("Thêm ảnh thành công");
+    } else {
+        window.alert("Có lỗi xảy ra");
+    }
+}
+async function showGiong(btnId) {
     let rep = await $.get('/giongs');
 
     let htm = "";
     rep.giongs.forEach(giong => {
         htm += giongHtm(giong);
     });
-    changeBtnColor(5);
+    changeBtnColor(btnId);
     appendHtm('main-view', htm);
 }
 
@@ -83,7 +182,18 @@ function giongHtm(giong) {
     let eventsHtm = "";
     giong.events.forEach(event => {
         eventsHtm += `<li>${event}</li>`
+    });
+
+    let urlHtm = "";
+    let length = giong.urls.length;
+
+    giong.urls.forEach(url => {
+        
+        urlHtm += `
+            <input value="${url}" hidden>
+        `
     })
+
     return `
     <div class="my-well-div">
             <div class="header" style="padding: 5px;">
@@ -96,14 +206,19 @@ function giongHtm(giong) {
                     
                     <div class="div-img">
                         <h3>Hình ảnh</h3>
-                        <img class="my-img" src="${giong.urls[0]}">
+                        <img id="img-view-${giong.id}" class="my-img" src="${giong.urls[0]}">
+                    </div>
+                    <div id="divImgSrc-${giong.id}">
+                        ${urlHtm}
                     </div>
                     <div class="div-img">
-                        <button><<</button>
-                        <span>1 of 2</span>
-                        <button>>></button>
-                        <button>+</button>
-                        <button>X</button>
+                        <button onclick="prevImage('divImgSrc-${giong.id}', 'img-view-${giong.id}')"><<</button>
+                        
+                        <button onclick="nextImage('divImgSrc-${giong.id}', 'img-view-${giong.id}')">>></button>
+
+                        <input id='inputImg-${giong.id}' type='file'>
+                        <button onclick="uploadResultImage(${giong.id}, 'inputImg-${giong.id}')">OK</button>
+                       
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -120,16 +235,17 @@ function giongHtm(giong) {
                 </div>
             </div>
             <hr>
-            <div class="footer" style="margin: 5px;border-radius:2px;padding:4px;">
+            <div class="footer form-group" style="margin: 5px;border-radius:2px;padding:4px;">
                 <h3>Thông tin chi tiết</h3>
-                <p>${giong.solution}</p>
+                <textarea id='textarea-${giong.id}' class='form-control'>${giong.solution.split('+').join('\n')}</textarea>
+                <button class='btn' onclick="capNhatThongTinResult('${giong.id}', 'textarea-${giong.id}')">Cập nhật</button>
             </div>
         </div>
     `;
 }
 
 function changeBtnColor(selectId) {
-    [1, 2, 3, 4, 5, 6, 7].forEach(id => {
+    [1, 2, 3, 4, 5, 6, 7, 8, 9].forEach(id => {
         if (id == selectId) {
             document.getElementById(id).style.backgroundColor = "#c9f4b2";
         } else {
@@ -138,18 +254,18 @@ function changeBtnColor(selectId) {
     })
 }
 
-async function showLuatBenh() {
+async function showLuatBenh(btnId) {
     let rep = await $.get('/luatBenhs');
     let htm = "";
     rep.rules.forEach(rule => {
         htm += luatBenhHtm(rule);
     })
     appendHtm('main-view', htm);
-    changeBtnColor(2);
+    changeBtnColor(btnId);
 
 }
 
-async function showLuatGiong() {
+async function showLuatGiong(btnId) {
  
     let rep = await $.get('/luatGiongs');
     let htm = "";
@@ -157,7 +273,7 @@ async function showLuatGiong() {
         htm += luatGiongHtm(rule);
     })
     appendHtm('main-view', htm);
-    changeBtnColor(3);
+    changeBtnColor(btnId);
 }
 
 function luatBenhHtm(rule) {
@@ -262,14 +378,14 @@ async function xemChiTietGiong(id) {
     $('#giong-modal').modal('show');
 }
 
-async function showSuKienMoi() {
+async function showSuKienMoi(btnId) {
     let rep = await $.get('/suKienMois');
     let htm = "";
     rep.facts.forEach(fact => {
         htm += suKienMoiHtm(fact);
     })
     appendHtm('main-view', htm);
-    changeBtnColor(1);
+    changeBtnColor(btnId);
 }
 
 function suKienMoiHtm(fact) {
@@ -417,8 +533,10 @@ $(document).ready(function() {
     goiYResult('chon-giong-lua-input', 'giong');
 })
 
-function themSuKien(event, inputId) {
-    if (event.key == 'Enter') {
-        console.log('ok');
-    }
+
+function themGiongMoi(btnId) {
+    changeBtnColor(btnId);
+}
+function themBenhMoi(btnId) {
+    changeBtnColor(btnId);
 }

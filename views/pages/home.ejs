@@ -41,7 +41,7 @@
     <div class="row" style="position:relative;">
         <div class="col-md-3"></div>
         <div class="col-md-6">
-            <div id="search-result">
+            <div id="search-result" class="form-group">
 
             </div>
         </div>
@@ -72,11 +72,7 @@
                 <hr>
             `
         }
-
-        let solutionsHtm = "";
-        result.solution.split('+').forEach(line => {
-            solutionsHtm += `<li>${line}</li>`;
-        })
+       
         let htm = `
                 <hr>
                 <h1>Tên bệnh : ${result.name}</h1>
@@ -89,9 +85,7 @@
                 <hr>
                 ${imgHtm}
                 <h2>Biện pháp chữa trị</h2>
-                <ul>
-                    ${solutionsHtm}
-                </ul>
+                <textarea class='form-control view-text' readonly>${result.solution}</textarea>
                 <hr>
                 <p><a href="#">Xem trang tiếp</a></p>
         `;
@@ -122,10 +116,7 @@
         }
  
 
-        let solutionsHtm = "";
-        result.solution.split('+').forEach(line => {
-            solutionsHtm += `<li>${line}</li>`;
-        });
+        
 
         let htm = `
                 <hr>
@@ -139,9 +130,7 @@
                 ${imgHtm}
       
                 <h2>Thông tin chi tiết</h2>
-                <ul>
-                    ${solutionsHtm}
-                </ul>
+                <textarea class='form-control view-text' readonly>${result.solution}</textarea>
                 <button onclick="loadNextPage()">Xem trang tiếp</button>
         `;
         $('#search-result').empty();

@@ -28,7 +28,7 @@ module.exports.routes = {
     view: 'pages/home'
   },
 
-
+  'post /capNhatContent' : 'ResultController.capNhatContent',
 
   'get /expert' : {action: 'expert-page'},
 
@@ -69,7 +69,8 @@ module.exports.routes = {
   // su kien moi
   'get /quanlysukienmoi' : 'FactController.quanlysukienmoi',
   'get /suKienMois' : 'FactController.getSuKienMois',
-
+  //upload image
+  'post /uploadImage' : 'ResultController.addImgToResult'
   /***************************************************************************
   *                                                                          *
   * More custom routes here...                                               *
