@@ -246,7 +246,7 @@ function giongHtm(giong) {
 function changeBtnColor(selectId) {
     [1, 2, 3, 4, 5, 6, 7].forEach(id => {
         if (id == selectId) {
-            document.getElementById(id).style.backgroundColor = "#c9f4b2";
+            document.getElementById(id).style.backgroundColor = "#c0c1bb";
         } else {
             document.getElementById(id).style.backgroundColor = "#ededed";
         }
