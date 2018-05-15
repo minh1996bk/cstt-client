@@ -72,6 +72,9 @@ module.exports.routes = {
   //upload image
   'post /uploadImage' : 'ResultController.addImgToResult',
   'post /themSuKienChoLuat' : 'RuleController.themSuKienChoLuat',
+
+  //update fact contact
+  'post /updateFactContact' : 'FactController.updateFactContact',
   /***************************************************************************
   *                                                                          *
   * More custom routes here...                                               *

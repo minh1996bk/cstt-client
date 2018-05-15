@@ -547,6 +547,7 @@ function goiYResult(inputId, type) {
 
 
 $(document).ready(function() {
+  
     goiYEvent('them-luat-benh-modal','chon-event-benh-input', 'ul-benh-events', 'benh', 'tao-luat-benh', 'chon-benh-lua-input', '/taoluatbenh', 'ti-le-chinh-xac');
     goiYEvent('them-luat-giong-modal', 'chon-event-giong-input', 'ul-giong-events', 'giong', 'tao-luat-giong', 'chon-giong-lua-input', '/taoluatgiong');
     goiYResult('chon-benh-lua-input', 'benh');

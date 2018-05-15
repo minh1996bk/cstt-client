@@ -33,12 +33,14 @@ module.exports = {
             })
         } else {
             
-            await Fact.create({
+            let newFact = await Fact.create({
                 type: 'benh',
                 newevent: eventNames.join('+'),
             })
+            .fetch();
             res.json({
                 message: "No result",
+                factId: newFact.id,
             })
         }
 
@@ -78,8 +80,14 @@ module.exports = {
                 result: result
             })
         } else {
+            let newFact = await Fact.create({
+                type: 'giong',
+                newevent: eventNames.join('+'),
+            })
+            .fetch();
             res.json({
                 message: "No result",
+                factId: newFact.id,
             })
         }
 

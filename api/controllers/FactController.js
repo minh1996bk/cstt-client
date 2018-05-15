@@ -13,7 +13,7 @@ module.exports = {
         });
     },
     getSuKienMois: async function(req, res) {
-        let facts = await Fact.find({});
+        let facts = await Fact.find({}).sort('createdAt DESC');
 
         facts.forEach(fact => {
             fact.events = fact.newevent.split("+");
@@ -24,5 +24,13 @@ module.exports = {
             facts: facts
         })
 
+    },
+    updateFactContact: async function(req, res) {
+        await Fact.update({id: req.body.factId}).set({
+            contact: req.body.contact
+        })
+        return res.json({
+            success: true
+        })
     }
 }

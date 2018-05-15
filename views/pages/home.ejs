@@ -145,7 +145,8 @@
     }
 
     $('#search-result-btn').on('click', function() {
-        if (!events) {
+        
+        if (!events || events.length == 0) {
             window.alert('Bạn phải nhập vào tâp sự kiện và nhấn enter');
             return false;
         }
@@ -163,7 +164,7 @@
                     
                     renderBenh(data.result, data.rate);
                 } else {
-                    showMessage();
+                    showMessage(data.factId);
                 }
                 
             });
@@ -178,7 +179,7 @@
                     
                     renderGiong(data.result);
                 } else {
-                    showMessage();
+                    showMessage(data.factId);
                 }
                 
             }); 
@@ -187,16 +188,31 @@
         events = [];
     });
 
-    function showMessage() {
+    function showMessage(factId) {
         $('#search-result').empty();
         $('#search-result').append(`<hr><h1>Không có kết quả phù hợp</h1>
             <div>
                 <div class='form-group'>
                     <label for='user-contact-input'>Bạn có thể để lại thông tin liên hệ dưới đây! Chuyên gia sẽ gửi câu trả lời trong thời gian sớm nhất</label>
                     <input id='user-contact-input' class='form-control' placeholder='Số điện thoại, email...'>
-                    <button class='btn'>Gửi</button>
+                    <button onclick="updateContact('${factId}', 'user-contact-input')" class='btn'>Gửi</button>
                 </div>
             </div>
         `)
+    }
+
+    async function updateContact(factId, contactInput) {
+        let contact = $(`#${contactInput}`).val();
+        
+        if (!contact) return window.alert("Bạn phải nhập vào số  điện thoại hoặc email!");
+        let rep = await $.post('/updateFactContact', {
+            factId: factId,
+            contact: contact
+        });
+        if (rep.success) {
+            $('#search-result').empty();
+            return window.alert("OK! Chuyên gia của chúng tôi sẽ hỗ trợ bạn trong thời gian sớm nhất");
+        }
+        else return window.alert("Lỗi hệ thông");
     }
 </script>
