@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: May 15, 2018 at 06:50 PM
+-- Generation Time: May 16, 2018 at 04:46 AM
 -- Server version: 10.1.13-MariaDB
 -- PHP Version: 5.6.20
 
@@ -822,14 +822,7 @@ CREATE TABLE `fact` (
 --
 
 INSERT INTO `fact` (`createdAt`, `updatedAt`, `id`, `type`, `newevent`, `contact`) VALUES
-(1525842629116, 1525842629116, 1, 'benh', 'cây bị gập lại', ''),
-(1525852332915, 1525852332915, 2, 'benh', 'vết lan rộng ra toàn lá', ''),
-(1526357319151, 1526357319151, 3, 'benh', 'dsf', ''),
-(1526358284695, 1526358284695, 4, 'benh', 'f', ''),
-(1526358342485, 1526358342485, 5, 'benh', 'a', ''),
-(1526358388236, 1526358388236, 6, 'benh', 'a', ''),
-(1526399904833, 1526399904833, 7, 'benh', 'vết lan rộng ra toàn lá', ''),
-(1526399911927, 1526399911927, 8, 'benh', 'vết lan rộng ra toàn lá', '');
+(1526438702149, 1526438708455, 11, 'benh', 'lá có sâu làm tổ', '09040293823');
 
 -- --------------------------------------------------------
 
@@ -1007,11 +1000,14 @@ INSERT INTO `url` (`createdAt`, `updatedAt`, `id`, `value`, `result`) VALUES
 (1526399726242, 1526399726333, 31, '/images/323f1213-ae7e-44ce-9b73-affbc727fe10.jpg', 2),
 (1526401618289, 1526401618907, 32, '/images/2a8d8d89-e567-4782-9e6b-38e1b1a28256.jpg', 25),
 (1526401886676, 1526401886804, 33, '/images/e22af981-89e8-4eb7-9235-b808cd13e823.jpg', 26),
-(1526402306988, 1526402306988, 34, '/images/d9c4cbad-a291-4824-8c75-9fc41a4932fe.jpg', NULL),
 (1526402319618, 1526402319687, 35, '/images/7412098e-6fd5-4cea-be01-520d1fcb16d5.jpg', 27),
 (1526402670292, 1526402670361, 36, '/images/ab2f5d8c-454c-43c0-a586-19b6c9e2579e.jpg', 28),
 (1526402757894, 1526402757962, 37, '/images/b2ca8062-088d-4274-a9db-bba96f0129b4.jpg', 29),
-(1526402882410, 1526402882479, 38, '/images/d41f6763-a636-4e99-b6c6-475853e9efa9.jpg', 30);
+(1526402882410, 1526402882479, 38, '/images/d41f6763-a636-4e99-b6c6-475853e9efa9.jpg', 30),
+(1526431711959, 1526431711959, 42, '/images/bbf56cf6-eedd-4fae-9f62-9da41824ab26.jpg', NULL),
+(1526431793083, 1526431793083, 43, '/images/5c901a91-7fcb-4eb3-9278-7164c9bbc79a.jpg', NULL),
+(1526431937156, 1526431937236, 44, '/images/be928970-8701-4f67-a010-605ad12c1af7.jpg', 5),
+(1526432012371, 1526432012432, 45, '/images/36db8dbc-e7b1-44f9-bee6-48ad5e9728f8.jpg', 15);
 
 --
 -- Indexes for dumped tables
@@ -1137,7 +1133,7 @@ ALTER TABLE `event_rules__rule_events`
 -- AUTO_INCREMENT for table `fact`
 --
 ALTER TABLE `fact`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 --
 -- AUTO_INCREMENT for table `result`
 --
@@ -1152,7 +1148,7 @@ ALTER TABLE `rule`
 -- AUTO_INCREMENT for table `url`
 --
 ALTER TABLE `url`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
