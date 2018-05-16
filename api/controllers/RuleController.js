@@ -243,13 +243,19 @@ module.exports = {
 
     },
     deleteRule: async function(req, res) {
-        console.log(req.body.ruleId);
+        
         await Rule.destroy({
             id: req.body.ruleId,
         })
         return res.json({
             success: true,
         })
-    }
-   
+    },
+
+   updateRate: async function(req, res) {
+       await Rule.update({id: req.body.ruleId}).set({rate: req.body.rate});
+       return res.json({
+           success: true,
+       })
+   }
 }

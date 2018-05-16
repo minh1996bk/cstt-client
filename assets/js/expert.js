@@ -49,12 +49,12 @@ function benhHtm(benh) {
                         ${urlHtm}
                     </div>
                     <div class="div-img">
-                        <button onclick="prevImage('divImgSrc-${benh.id}', 'img-view-${benh.id}')"><<</button>
+                        <button class='btn margin-top' onclick="prevImage('divImgSrc-${benh.id}', 'img-view-${benh.id}')"><<</button>
                         
-                        <button onclick="nextImage('divImgSrc-${benh.id}', 'img-view-${benh.id}')">>></button>
+                        <button class='btn margin-top' onclick="nextImage('divImgSrc-${benh.id}', 'img-view-${benh.id}')">>></button>
      
-                        <input id='inputImg-${benh.id}' type='file'>
-                        <button onclick="uploadResultImage(${benh.id}, 'inputImg-${benh.id}')">OK</button>
+                        <input  class='btn margin-top' id='inputImg-${benh.id}' type='file'>
+                        <button  class='btn margin-top' onclick="uploadResultImage(${benh.id}, 'inputImg-${benh.id}')">OK</button>
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -74,7 +74,7 @@ function benhHtm(benh) {
             <div class="footer form-group" style="margin: 5px;border-radius:2px;padding:4px;">
                 <h3>Phương pháp chữa trị</h3>
                 <textarea style='height: 300px;' id='textarea-${benh.id}' class='form-control'>${benh.solution.split('+').join('\n')}</textarea>
-                <button class='btn btn-success' onclick="capNhatThongTinResult('${benh.id}', 'textarea-${benh.id}')">Cập nhật</button>
+                <button class='btn btn-success margin-top' onclick="capNhatThongTinResult('${benh.id}', 'textarea-${benh.id}')">Cập nhật</button>
             </div>
         </div>
     `;
@@ -211,12 +211,12 @@ function giongHtm(giong) {
                         ${urlHtm}
                     </div>
                     <div class="div-img">
-                        <button onclick="prevImage('divImgSrc-${giong.id}', 'img-view-${giong.id}')"><<</button>
+                        <button  class='btn margin-top' onclick="prevImage('divImgSrc-${giong.id}', 'img-view-${giong.id}')"><<</button>
                         
-                        <button onclick="nextImage('divImgSrc-${giong.id}', 'img-view-${giong.id}')">>></button>
+                        <button  class='btn margin-top' onclick="nextImage('divImgSrc-${giong.id}', 'img-view-${giong.id}')">>></button>
 
-                        <input id='inputImg-${giong.id}' type='file'>
-                        <button onclick="uploadResultImage(${giong.id}, 'inputImg-${giong.id}')">OK</button>
+                        <input  class='btn margin-top'  id='inputImg-${giong.id}' type='file'>
+                        <button  class='btn margin-top' onclick="uploadResultImage(${giong.id}, 'inputImg-${giong.id}')">OK</button>
                        
                     </div>
                 </div>
@@ -237,7 +237,7 @@ function giongHtm(giong) {
             <div class="footer form-group" style="margin: 5px;border-radius:2px;padding:4px;">
                 <h3>Thông tin chi tiết</h3>
                 <textarea style='height: 300px;' id='textarea-${giong.id}' class='form-control'>${giong.solution.split('+').join('\n')}</textarea>
-                <button class='btn btn-success' onclick="capNhatThongTinResult('${giong.id}', 'textarea-${giong.id}')">Cập nhật</button>
+                <button class='btn btn-success margin-top' onclick="capNhatThongTinResult('${giong.id}', 'textarea-${giong.id}')">Cập nhật</button>
             </div>
         </div>
     `;
@@ -299,7 +299,10 @@ function luatBenhHtm(rule) {
                     Mã bệnh: ${rule.result.id}
                 </p>
                 <p>Tên bệnh: <span onclick="xemChiTietBenh(${rule.result.id})" class="like-link">${rule.result.name}</span></p>
-                <p>Tỉ lệ chính xác: ${rule.rate}</p>
+                <label>Tỉ lệ chính xác: </label>
+                <input id='rate-input-${rule.id}' style='border-radius: 3px; padding:6px;' type='number' value='${rule.rate}' onchange="showSaveBtn('rate-button-${rule.id}')">
+                <button id='rate-button-${rule.id}' style='display: none;' class='btn btn-success' onclick="saveUpdateRate('${rule.id}', 'rate-input-${rule.id}', 'rate-button-${rule.id}')">Lưu cập nhật</button>
+                <br>
                 <button class='btn btn-danger' onclick="deleteRule(${rule.id}, 'div-rule-${rule.id}')">Xóa luật</button>
             </div>
             <div class="col-md-6">
@@ -315,6 +318,26 @@ function luatBenhHtm(rule) {
         </div>
     </div>
     `
+}
+
+function showSaveBtn(btnId) {
+    $(`#${btnId}`).show();
+}
+
+async function saveUpdateRate(ruleId, inputId, btnId) {
+    let rate = $(`#${inputId}`).val();
+    let rep = await $.post('/updateRate', {
+        ruleId: ruleId,
+        rate: rate,
+    })
+    if (rep.success) {
+        window.alert("Cập nhật thành công");
+        $(`#${btnId}`).hide();
+    } else {
+        window.alert("Có lỗi xảy ra");
+    }
+    
+
 }
 
 function luatGiongHtm(rule) {
