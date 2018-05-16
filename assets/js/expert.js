@@ -74,7 +74,7 @@ function benhHtm(benh) {
             <div class="footer form-group" style="margin: 5px;border-radius:2px;padding:4px;">
                 <h3>Phương pháp chữa trị</h3>
                 <textarea style='height: 300px;' id='textarea-${benh.id}' class='form-control'>${benh.solution.split('+').join('\n')}</textarea>
-                <button class='btn' onclick="capNhatThongTinResult('${benh.id}', 'textarea-${benh.id}')">Cập nhật</button>
+                <button class='btn btn-success' onclick="capNhatThongTinResult('${benh.id}', 'textarea-${benh.id}')">Cập nhật</button>
             </div>
         </div>
     `;
@@ -237,7 +237,7 @@ function giongHtm(giong) {
             <div class="footer form-group" style="margin: 5px;border-radius:2px;padding:4px;">
                 <h3>Thông tin chi tiết</h3>
                 <textarea style='height: 300px;' id='textarea-${giong.id}' class='form-control'>${giong.solution.split('+').join('\n')}</textarea>
-                <button class='btn' onclick="capNhatThongTinResult('${giong.id}', 'textarea-${giong.id}')">Cập nhật</button>
+                <button class='btn btn-success' onclick="capNhatThongTinResult('${giong.id}', 'textarea-${giong.id}')">Cập nhật</button>
             </div>
         </div>
     `;
@@ -447,7 +447,7 @@ function suKienMoiHtm(fact) {
                 <p>
                     Thông tin liên hệ: ${fact.contact || "Không có thông tin"}
                 </p>
-                <button onclick="resolveFact(${fact.id}, 'div-fact-${fact.id}')">Giải quyết</button>
+                <button class="btn btn-success" onclick="resolveFact(${fact.id}, 'div-fact-${fact.id}')">Giải quyết</button>
             </div>
             <div class="col-md-6">
                 <h3>Tập sự kiện</h3>

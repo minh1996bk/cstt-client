@@ -34,7 +34,7 @@
                         </ul>
                     </div>
                     <div style="margin-top: 10px;">
-                        <button id="search-result-btn" class="btn mybtn" style="border: 0.5px solid #b7bec9;">Chuẩn đoán</button>
+                        <button id="search-result-btn" class="btn mybtn btn-success" style="border: 0.5px solid #b7bec9;">Chuẩn đoán</button>
     
                     </div>
                 </div>
@@ -220,4 +220,8 @@
         }
         else return window.alert("Lỗi hệ thông");
     }
+
+    $(document).ready(function() {
+        $('#event-text').focus();
+    })
 </script>
