@@ -63,8 +63,8 @@ function benhHtm(benh) {
                         ${eventsHtm}
                         <li>
                             <div>
-                                <input placeholder="Nhap vao trieu chung moi">
-                                <button>OK</button>
+                                <input class="form-control" placeholder="Nhap vao trieu chung moi">
+                                <button class="btn btn-info" style="margin-top:5px;">OK</button>
                             </div>
                         </li>
                     </ul>
@@ -226,8 +226,8 @@ function giongHtm(giong) {
                         ${eventsHtm}
                         <li>
                             <div>
-                                <input placeholder="Nhập vào đặc tính mới">
-                                <button>OK</button>
+                                <input class="form-control" placeholder="Nhập vào đặc tính mới">
+                                <button class="btn btn-info" style="margin-top:5px;">OK</button>
                             </div>
                         </li>
                     </ul>
@@ -307,8 +307,8 @@ function luatBenhHtm(rule) {
                 <ul id="ul-event-list-${rule.id}">
                     ${eventsHtm}
                     <li>
-                        <input id="input-event-${rule.id}" placeholder="Nhâp tên triệu chứng mới cho luật">
-                        <button onclick="themSuKienChoLuat('${rule.id}', '${rule.result.id}', 'benh', 'input-event-${rule.id}', 'ul-event-list-${rule.id}')">Thêm</button>
+                        <input class="form-control" id="input-event-${rule.id}" placeholder="Nhâp tên triệu chứng mới cho luật">
+                        <button style="margin-top:5px;" class="btn btn-info" onclick="themSuKienChoLuat('${rule.id}', '${rule.result.id}', 'benh', 'input-event-${rule.id}', 'ul-event-list-${rule.id}')">Thêm</button>
                     </li>
                 </ul>
             </div>
@@ -348,8 +348,8 @@ function luatGiongHtm(rule) {
                 <ul id="ul-event-list-${rule.id}">
                     ${eventsHtm}
                     <li>
-                        <input id="input-event-${rule.id}" placeholder="Nhập đặc tính mới cho luật">
-                        <button onclick="themSuKienChoLuat('${rule.id}', '${rule.result.id}', 'giong', 'input-event-${rule.id}', 'ul-event-list-${rule.id}')">Thêm</button>
+                        <input class="form-control" id="input-event-${rule.id}" placeholder="Nhập đặc tính mới cho luật">
+                        <button style="margin-top:5px;" class="btn btn-info" onclick="themSuKienChoLuat('${rule.id}', '${rule.result.id}', 'giong', 'input-event-${rule.id}', 'ul-event-list-${rule.id}')">Thêm</button>
                     </li>
                 </ul>
             </div>
