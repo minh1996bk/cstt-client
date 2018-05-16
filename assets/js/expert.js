@@ -417,23 +417,25 @@ function suKienMoiHtm(fact) {
     let type = "Bệnh lúa";
     if (fact.type == 'giong') type = "Chọn giống"; 
     return `
-    <div class="row my-well-div">
-        <div class="col-md-6">
-            <p>
-                Loại câu hỏi: ${type}
-            </p>
-            <p>
-                Ngày tạo: ${formatDate(fact.createdAt)}
-            </p>
-            <p>
-                Thông tin liên hệ: ${fact.contact || "Không có thông tin"}
-            </p>
-        </div>
-        <div class="col-md-6">
-            <h3>Tập sự kiện</h3>
-            <ul>
-                ${eventsHtm}
-            </ul>
+    <div class="my-well-div">
+        <div class="row">
+            <div class="col-md-6">
+                <p>
+                    Loại câu hỏi: ${type}
+                </p>
+                <p>
+                    Ngày tạo: ${formatDate(fact.createdAt)}
+                </p>
+                <p>
+                    Thông tin liên hệ: ${fact.contact || "Không có thông tin"}
+                </p>
+            </div>
+            <div class="col-md-6">
+                <h3>Tập sự kiện</h3>
+                <ul>
+                    ${eventsHtm}
+                </ul>
+            </div>
         </div>
     </div>
     `
