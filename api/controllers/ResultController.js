@@ -34,7 +34,7 @@ module.exports = {
                 let newUrl = await Url.create({
                     value: url,
                 }).fetch();
-
+                console.log(req.body);
                 await Result.addToCollection(req.body.resultId, 'urls').members([newUrl.id]);
                 res.json({
                     success: true,

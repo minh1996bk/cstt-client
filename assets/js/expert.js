@@ -246,9 +246,9 @@ function giongHtm(giong) {
 function changeBtnColor(selectId) {
     [1, 2, 3, 4, 5, 6, 7].forEach(id => {
         if (id == selectId) {
-            document.getElementById(id).style.backgroundColor = "#c0c1bb";
+            document.getElementById(id).style.backgroundColor = "#699bce";
         } else {
-            document.getElementById(id).style.backgroundColor = "#ededed";
+            document.getElementById(id).style.backgroundColor = "#37455b";
         }
     })
 }
