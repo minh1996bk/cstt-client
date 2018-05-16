@@ -95,6 +95,7 @@ function prevImg() {
 
 
 $('#disease-mode-btn').on('click', function() {
+    $('#event-text').focus();
     type = 'benh';
     $('#event-list-header').text('Tập các triệu chứng bệnh');
     $('#search-result-btn').text('Chuẩn đoán');
@@ -106,6 +107,7 @@ $('#disease-mode-btn').on('click', function() {
 });
 
 $('#planting-mode-btn').on('click', function() {
+    $('#event-text').focus();
     type = 'giong';
     $('#event-list-header').text('Tập các đặc tính của lúa');
     $('#search-result-btn').text('Chọn giống');
