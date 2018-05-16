@@ -32,5 +32,14 @@ module.exports = {
         return res.json({
             success: true
         })
+    },
+    resolveFact: async function(req, res) {
+        console.log(req.body.factId);
+        await Fact.destroy({
+            id: req.body.factId
+        })
+        return res.json({
+            success: true
+        })
     }
 }

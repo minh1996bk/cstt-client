@@ -417,7 +417,7 @@ function suKienMoiHtm(fact) {
     let type = "Bệnh lúa";
     if (fact.type == 'giong') type = "Chọn giống"; 
     return `
-    <div class="my-well-div">
+    <div id="div-fact-${fact.id}" class="my-well-div">
         <div class="row">
             <div class="col-md-6">
                 <p>
@@ -429,6 +429,7 @@ function suKienMoiHtm(fact) {
                 <p>
                     Thông tin liên hệ: ${fact.contact || "Không có thông tin"}
                 </p>
+                <button onclick="resolveFact(${fact.id}, 'div-fact-${fact.id}')">Giải quyết</button>
             </div>
             <div class="col-md-6">
                 <h3>Tập sự kiện</h3>
@@ -439,6 +440,21 @@ function suKienMoiHtm(fact) {
         </div>
     </div>
     `
+}
+
+async function resolveFact(factId, divFactId) {
+    let rep = await $.post('/resolveFact', {
+        factId: factId
+    });
+    let dicision = window.confirm("Bạn chắc chắn đã xử  lý câu hỏi này?")
+    if (!dicision) return;
+    if (rep.success) {
+        let removeDiv = document.getElementById(divFactId);
+        removeDiv.parentNode.removeChild(removeDiv);
+        return window.alert('OK');
+    } else {
+        window.alert("Có lỗi xảy ra");
+    }
 }
 
 function goiYEvent(modalId, inputId, ulEvents, type, btnTaoLuatId, resultInputId, url, rateInputId) {
