@@ -281,7 +281,7 @@ function luatBenhHtm(rule) {
         eventsHtm += `<li>${event.name}</li>`
     })
     return `
-    <div class="my-well-div">
+    <div id="div-rule-${rule.id}" class="my-well-div">
         <div class="row" style="padding:10px;">
             <div class="col-md-6">
                 <h3>Thông tin luật</h3>
@@ -300,6 +300,7 @@ function luatBenhHtm(rule) {
                 </p>
                 <p>Tên bệnh: <span onclick="xemChiTietBenh(${rule.result.id})" class="like-link">${rule.result.name}</span></p>
                 <p>Tỉ lệ chính xác: ${rule.rate}</p>
+                <button class='btn btn-danger' onclick="deleteRule(${rule.id}, 'div-rule-${rule.id}')">Xóa luật</button>
             </div>
             <div class="col-md-6">
                 <h3>Tập triệu chứng</h3>
@@ -322,7 +323,7 @@ function luatGiongHtm(rule) {
         eventsHtm += `<li>${event.name}</li>`
     })
     return `
-    <div class="my-well-div">
+    <div id="div-rule-${rule.id}" class="my-well-div">
         <div class="row" style="padding:10px;">
             <div class="col-md-6">
                 <h3>Thông tin luật</h3>
@@ -340,6 +341,7 @@ function luatGiongHtm(rule) {
                     Mã giống lúa: ${rule.result.id}
                 </p>
                 <p>Tên giống lúa: <span onclick="xemChiTietGiong(${rule.result.id})" class="like-link">${rule.result.name}</span></p>
+                <button class='btn btn-danger' onclick="deleteRule(${rule.id}, 'div-rule-${rule.id}')">Xóa luật</button>
             </div>
             <div class="col-md-6">
                 <h3>Tập đặc tính lúa</h3>
@@ -354,6 +356,22 @@ function luatGiongHtm(rule) {
         </div>
     </div>
     `
+}
+
+async function deleteRule(ruleId, divRuleId) {
+    let dicision = window.confirm(`Bạn chắc chắng muốn xóa luật Mã luật = ${ruleId}`);
+    if (!dicision) return;
+    let rep = await $.post('/deleteRule', {
+        ruleId: ruleId
+    })
+    if (rep.success) {
+        window.alert(`Mã luật = ${ruleId} xóa thành công!`);
+        let divRule = document.getElementById(divRuleId);
+        divRule.parentNode.removeChild(divRule);
+    } else {
+        window.alert("Có lỗi xảy ra");
+    }
+    
 }
 
 async function themSuKienChoLuat(ruleId, resultId, type, inputId, ulListEventsId) {

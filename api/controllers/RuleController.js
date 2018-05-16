@@ -241,6 +241,15 @@ module.exports = {
             success: true
         })
 
+    },
+    deleteRule: async function(req, res) {
+        console.log(req.body.ruleId);
+        await Rule.destroy({
+            id: req.body.ruleId,
+        })
+        return res.json({
+            success: true,
+        })
     }
    
 }

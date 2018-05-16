@@ -76,6 +76,7 @@ module.exports.routes = {
   //update fact contact
   'post /updateFactContact' : 'FactController.updateFactContact',
   'post /resolveFact' : 'FactController.resolveFact',
+  'post /deleteRule' : 'RuleController.deleteRule',
   /***************************************************************************
   *                                                                          *
   * More custom routes here...                                               *

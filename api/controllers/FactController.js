@@ -34,7 +34,7 @@ module.exports = {
         })
     },
     resolveFact: async function(req, res) {
-        console.log(req.body.factId);
+ 
         await Fact.destroy({
             id: req.body.factId
         })
